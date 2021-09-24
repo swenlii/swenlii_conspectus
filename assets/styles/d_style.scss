@@ -1,0 +1,956 @@
+@import '~assets/styles/variables.scss';
+
+$white1: #171616;
+$white2: #171616;
+$white3: #c1c1c1;
+
+$black: #cecece;
+$black2: #282828;
+$black3: #bababa;
+
+body.dark {
+  background-color: $white2;
+  color: $black;
+}
+
+#app.dark {
+  main {
+
+    a {
+      text-decoration: underline;
+      background-color: transparent;
+
+      &:visited {
+        color: #787878;
+      }
+
+      &:hover {
+        background-color: $black3;
+        color: $white1;
+        text-decoration: underline $white1;
+      }
+
+      &:active {
+        background-color: $black3;
+        text-decoration: underline $white1;
+      }
+
+
+    }
+
+    p {
+      line-height: 1.4;
+    }
+
+    blockquote {
+      p {
+        &:before {
+          @extend .font-style-1;
+          color: $black2;
+        }
+        &:after {
+          color: $black2;
+        }
+      }
+      cite {
+        color: #9c9c9c;
+      }
+    }
+
+
+  }
+
+  input, textarea, button {
+    &:-webkit-autofill {
+      -webkit-box-shadow: inset 0 0 0 50px #fff !important; /* Цвет фона */
+      color: white !important;
+    }
+  }
+
+  input:-internal-autofill-selected {
+    color: white !important;
+  }
+
+  h1 {
+    &:before {
+      color: #1b1b1b;
+    }
+  }
+
+  pre code {
+    background-color: transparent;
+  }
+
+  .hljs-ln-numbers {
+    border-right: 1px solid $black;
+  }
+
+  .little-mobile {
+    background-color: $black3;
+    color: $white1;
+    button {
+      background-color: $black3;
+      color: $white1;
+      border: 1px solid $white1;
+    }
+  }
+
+  #search-block {
+    input {
+      background-color: $white1;
+      color: $black;
+      border: none;
+      border-bottom: 1px solid $black;
+
+      &::placeholder {
+        color: $white3;
+      }
+    }
+  }
+
+  .conspectus {
+    text-shadow: 4px 4px $white2;
+    background-color: $white2;
+    border-bottom: 1px solid $black;
+
+    &:after {
+      color: white;
+      background: repeating-linear-gradient(0deg, $black 0 2px, $white2 2px 4px, $black 4px 6px, $white2 6px 8px, $black 8px 10px, $white2 10px 12px);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  .content-header{
+    border-bottom: 1px double $black;
+
+
+    p {
+      color: $black;
+      background-color: $white2;
+    }
+
+    div {
+      &:nth-child(2) {
+        background-color: $black;
+        box-shadow: 2px 2px $white1, 1em 1em $black;
+      }
+    }
+  }
+
+  //-------------- ДРУГОЕ -------------------------
+  .checkbox {
+    input {
+      background: $white2;
+      border: none;
+      box-shadow: inset 0 0 0 1px $black;
+      &:hover {
+        background: $white3;
+      }
+      &:hover:checked {
+        box-shadow: inset 0 0 0 11px $black2;
+      }
+      &:checked {
+        box-shadow: inset 0 0 0 11px $black;
+      }
+    }
+    svg {
+      stroke: $white1;
+    }
+  }
+
+  header {
+    background-color: $white2;
+    color: $black;
+    border-right: 1px solid $black;
+
+    img {
+      filter: brightness(0%) invert(100%);
+    }
+
+    #big-menu li a:hover, details > summary:hover {
+      text-shadow: -1em 0 rgba(255,255,255,.2);
+    }
+
+    *[tooltip] {
+      &:hover:before {
+        background-color: $black3;
+        color: $white1;
+      }
+    }
+
+    nav {
+      li {
+        a {
+          text-shadow: 0 0 rgba(255,255,255,.2);
+        }
+      }
+
+      details {
+        ul {
+          a {
+            color: #616161;
+            &:hover {
+              text-shadow: 1em 0 rgba(255,255,255,.2) !important;
+            }
+          }
+        }
+      }
+    }
+
+    //------ Theme ---------
+
+    .theme-block button {
+      background-color: $black2;
+      color: $black;
+
+      &:hover {
+        box-shadow: -1px 1px #101010, -2px 2px #101010, -3px 3px #101010, -4px 4px #101010, -5px 5px #101010, 2px -2px 12px rgba(0,0,0,.4);
+        span:hover {
+          &:before {
+            background-color: $black2;
+          }
+        }
+
+
+      }
+
+      &:active {
+        box-shadow: 3px -3px 10px rgba(0,0,0,.2) inset, -3px 3px 10px rgba(0,0,0,.2) inset;
+      }
+    }
+  }
+
+  .home-page {
+    background-color: $black3;
+
+    .main-section {
+      background-color: $white2;
+    }
+
+    h3 {
+      background-color: transparent;
+      border-bottom: none;
+      border-top: none;
+    }
+
+    details summary {
+      border: 1px solid $black;
+      background-color: $white2;
+      color: $black;
+      box-shadow: 0 8px 6px -6px rgba(0,0,0,.2), 0 -8px 6px -6px rgba(0,0,0,.2);
+    }
+
+    details div {
+      background-color: $white2;
+      border: 1px solid $black;
+    }
+
+    .other-info {
+      background-color: $white2;
+
+      .who-create {
+        a {
+          background-color: $black3;
+          color: $white2;
+          border: 2px solid $white2;
+
+          &:hover {
+            box-shadow: 14px 14px $white3, -14px 14px $white3;
+            background-color: $white3;
+            color: $white1;
+          }
+
+          &:active {
+            box-shadow: 2px 2px $white1, -2px 2px $white1;
+            background-color: $black3;
+            color: $white1;
+          }
+        }
+      }
+
+      .second-block {
+        display: grid;
+        background-color: $black3;
+
+      }
+
+      .last-art {
+        border-top: 1px solid $black;
+        background-color: $white2;
+        img {
+          background-color: $black3;
+          filter: grayscale(100%);
+        }
+
+        a {
+          background-color: $black3;
+          color: $white2;
+          box-shadow: 0 0 $black;
+          border: 1px solid $white2;
+
+          &:hover {
+            background-color: $white3;
+            box-shadow: -10px 10px $white3;
+            color: $white1;
+          }
+
+          &:active {
+            background-color: $black3;
+            color: $white1;
+          }
+        }
+      }
+
+      .changes {
+        background-color: $white2;
+        border-top: 1px solid $black;
+      }
+
+      .email-spam {
+        border-top: 1px solid $black;
+
+        input[type="email"] {
+          box-shadow: inset 0 0 0 50px $white2 !important;
+          border-bottom: 1px solid $black;
+        }
+
+        input[type="submit"] {
+          background-color: $black3;
+          color: $white1;
+          box-shadow: 0 0 $white2, 0 0 $white3;
+
+          &:hover {
+            background-color: $white3;
+            box-shadow: 1px 1px $white2, 10px 10px $white3;
+            color: $white1;
+          }
+        }
+      }
+    }
+  }
+
+  .about {
+    .contacts {
+      background-color: transparent;
+      border-left: 1px solid $black;
+      color: $black;
+
+      img {
+        filter: invert(100%);
+      }
+
+      .contact-img {
+
+        .img-box {
+          border: 1px solid $black;
+          box-shadow: 7px 7px $black;
+
+        }
+
+        &:before {
+          background-color: $black3;
+        }
+      }
+
+      form {
+        border: 1px solid $black;
+        box-shadow: 7px 7px $white1;
+        color: $black;
+        background-color: transparent;
+      }
+
+      h3 {
+        border: 1px solid $black;
+        box-shadow: 7px 7px $black;
+      }
+
+      input, textarea {
+        color: $black;
+        border: 1px solid $black;
+        box-shadow: 7px 7px $black, inset 0 0 0 50px $white2 !important;
+        background-color: transparent !important;
+      }
+
+      button {
+        border: 1px solid $black;
+        background-color: $white2;
+        box-shadow: 8px 8px $black;
+        color: $black;
+
+        &:hover {
+          border: 1px solid $black;
+          background-color: $white2;
+          color: $black;
+          box-shadow: 5px 5px $black;
+        }
+      }
+    }
+  }
+
+  .article-page {
+    .art-tags {
+      a {
+        background-color: $black;
+        color: $white1;
+      }
+    }
+
+    .test {
+      button {
+        border: 1px solid $black;
+        color: $black;
+        &:hover {
+          background-color: $black2;
+        }
+      }
+      input[type="text"] {
+        border: 1px solid $black;
+        color: $black;
+      }
+
+      details {
+        border: 1px solid $black;
+      }
+    }
+
+
+    .content {
+      border-bottom: 1px solid $black;
+    }
+
+    code {
+      background-color: $black2;
+      color: #cdcdcd;
+    }
+
+    article {
+      #art-content > p:nth-child(1)::first-letter {
+        color: $white1;
+        background-color: $black3;
+      }
+
+      h5 {
+        border-bottom: 1px solid $black;
+      }
+
+      section > ul {
+        border-bottom: 1px solid $black;
+      }
+
+      section > ol {
+          border-top: 1px solid $black;
+          &:before {
+            background-color: $black3;
+            color: $white1;
+          }
+        }
+
+      .warning,
+      .note,
+      .info,
+      .question {
+        >div:nth-child(1){
+          background-color: $black3;
+        }
+        >div:nth-child(2){
+          border: 1px solid $black;
+        }
+        img {
+          filter: brightness(0%);
+          width: 40px;
+        }
+      }
+
+      .tooltip {
+        border-bottom: 1px dashed #333;
+      }
+
+      .cards {
+        .card {
+          border: 1px solid $black;
+          b {
+            background-color: $black3;
+            color: $white1;
+          }
+        }
+      }
+
+      .lang-name {
+        border: 1px solid $black;
+        background-color: $black3;
+        color: $white1;
+      }
+
+      pre {
+        border: 1px solid $black;
+      }
+
+      table.table, .table th, .table td {
+        border: 1px solid $black3;
+      }
+
+      table.table {
+        thead {
+          background-color: $black3;
+          color: $white1;
+        }
+        tfoot {
+          background-color: $black2;
+        }
+      }
+
+      .path-to-art {
+        color: #828282;
+
+        a {
+          color: #828282;
+        }
+      }
+
+      .about-art {
+        border-bottom: 1px $black solid;
+        border-top: 1px $black solid;
+      }
+    }
+
+    .aside-art {
+
+      .close-aside {
+        color: $black;
+        &:hover {
+          background-color: $black2;
+        }
+      }
+
+      .tabs-content {
+        background-color: $white1;
+        color: $black;
+        border-left: 1px solid $black;
+      }
+
+
+
+      .tabs-menu {
+        color: $white1;
+        background-color: $white2;
+        border-left: 1px solid $black;
+
+        label {
+          color: $black;
+
+
+          &:hover {
+            background-color: $black2;
+          }
+        }
+
+        .slide {
+          background-color: $black3;
+        }
+      }
+    }
+
+    #tab-name1:checked ~ .tabs-menu label[for="tab-name1"],
+    #tab-name2:checked ~ .tabs-menu label[for="tab-name2"],
+    #tab-name3:checked ~ .tabs-menu label[for="tab-name3"],
+    #tab-name4:checked ~ .tabs-menu label[for="tab-name4"],
+    #tab-name5:checked ~ .tabs-menu label[for="tab-name5"] {
+      color: $white2;
+    }
+
+    .under-cont {
+      .comments {
+        h3 {
+          border: 1px solid $black;
+          box-shadow: -6px 6px $black, inset 0 0 0 50px $white2;
+        }
+
+        textarea, input {
+          border: 1px solid $black;
+          box-shadow: -6px 6px $black;
+          color: $black;
+        }
+
+        input[type="submit"] {
+          color: $black;
+
+          &:hover {
+            box-shadow: -4px 4px $black;
+          }
+
+          &:active {
+            box-shadow: 0 0 $black;
+          };
+        }
+
+        .one-coment {
+          border: 1px solid $black;
+          box-shadow: -6px 6px $black;
+        }
+      }
+
+      .sim-arts {
+        h3 {
+          border: 1px solid $black;
+          box-shadow: 2px 2px $white2, 3px 3px $black, 5px 5px $white2, 6px 6px $black;
+        }
+
+        .one-sim-arts{
+          border: 1px solid $black;
+          box-shadow: 2px 2px $white2, 3px 3px $black, 5px 5px $white2, 6px 6px $black;
+
+          &:hover {
+            box-shadow: 4px 4px $white2, 5px 5px $black, 9px 9px $white2, 10px 10px $black;
+          }
+
+          a {
+            background-color: $black3;
+            color: $white1;
+            box-shadow: 2px 2px $white2, 3px 3px $black, 5px 5px $white2, 6px 6px $black;
+
+            &:hover {
+              box-shadow: 4px 4px $white2, 5px 5px $black, 9px 9px $white2, 10px 10px $black;
+              background-color: $black3;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .guides-content {
+
+    h3 {
+      border: 1px solid $white1;
+      box-shadow: 3px 3px $black3, 4px 4px $white1, 7px 7px $black3, 8px 8px $white1;
+    }
+
+    .guide-details {
+      box-shadow: 3px 3px $black3, 4px 4px $white1, 7px 7px $black3, 8px 8px $white1;
+    }
+
+    .front-end {
+      background-color: $black3;
+      color: $white1;
+    }
+
+    .back-end {
+      background-color: $black3;
+      color: $white1;
+    }
+
+    details div {
+      border: 1px solid $white1;
+      background-color: $black3;
+    }
+
+    summary {
+      background-color: $black3;
+      border: 1px solid $white1;
+
+      .progress {
+        background-color: #a1a1a1;
+      }
+
+      a {
+        color: $white1;
+
+        &:hover {
+          background: transparent;
+        }
+
+        &:after {
+          border-bottom: 1px solid $white1;
+        }
+
+        &:before {
+          border-bottom: 1px solid $white1;
+        }
+      }
+    }
+  }
+
+  .library-content {
+    > a {
+      padding: 0.5em 2em;
+      margin-bottom: 2em;
+      position: relative;
+      box-shadow: -1px 1px $white2;
+      transition: 0.5s all ease;
+      top: 0;
+      left: 0;
+      cursor: pointer;
+      background-color: $white2;
+      text-decoration: none;
+      color: $black;
+      border-bottom: 1px solid $black;
+      &:visited {
+        color: #878787 !important;
+      }
+      &:active {
+        box-shadow: 0 5px 10px $white2;
+        transform: scale(1.07);
+        transition: 0.1s all ease;
+      }
+      &:hover {
+        text-decoration: none;
+        background-color: $white1;
+        box-shadow: 0 15px 10px $white1;
+        transform: scale(1.07);
+        color: inherit;
+      }
+    }
+  }
+
+  .help-page {
+    background-color: $white2;
+
+    & > div {
+      background-color: $white2;
+    }
+
+    ol {
+      > li {
+
+        &:before {
+          color: $black;
+          border: 1px solid $black;
+        }
+      }
+    }
+
+    ul li {
+      img {
+        filter: invert(100%);
+      }
+    }
+
+    a, summary {
+      background-color: $white2;
+      border: 1px solid $black;
+
+      &:hover {
+        background-color: $black2;
+        color: $black;
+      }
+
+      &:active {
+        background-color: $black3;
+        color: $white1;
+      }
+    }
+
+    details form {
+      background-color: $white2;
+      border: 1px solid $black3;
+
+      input, textarea {
+        border-bottom: 1px solid $black;
+        color: $black;
+        box-shadow: inset 0 0 0 50px $white2 !important;
+      }
+
+      button {
+        background-color: transparent;
+        color: $black;
+        border: 1px solid $black;
+
+        &:hover {
+          box-shadow: 2px 2px $white2, 3px 3px $black, 5px 5px $white2, 6px 6px $black;
+        }
+
+        &:active {
+          box-shadow: 2px 2px $white2, 3px 3px $black;
+        }
+      }
+    }
+  }
+
+  .guide-page {
+    ol {
+      > li {
+        &:before {
+          background-color: $black3;
+          color: $white2;
+        }
+      }
+    }
+
+    > .content-header > div:nth-child(2) {
+      background-color: $black3;
+      color: $white1;
+      box-shadow: 20px 20px $black;
+      border: 5px solid $white2;
+
+      &:hover {
+        box-shadow:  -20px -20px $black;
+      }
+    }
+
+    li > a {
+      background: $white2;
+      color: $black;
+      text-decoration: none;
+      border: 1px solid $black;
+
+      &:visited {
+        color: $black;
+        background: #2a2a2a;
+      }
+
+      &.read {
+        background: $white2;
+        color: $black;
+      }
+    }
+  }
+
+  .articles {
+    .sort-block {
+      background-color: $black;
+      color: $white1;
+
+      .filters-1 .checkbox input {
+        border:none;
+        &:hover {
+          background: $black2;
+        }
+        &:hover:checked {
+          box-shadow: inset 0 0 0 11px $black3;
+        }
+        &:checked {
+          box-shadow: inset 0 0 0 11px $black;
+        }
+      }
+
+      .filters-2 {
+        input[type="checkbox"] {
+          &:checked + label {
+            color: $black;
+
+          }
+        }
+
+        label {
+          color: $white1;
+          border-bottom: 1px double $black;
+          &:before {
+            background-color: $white1;
+            border: 2px solid $black;
+            box-shadow: 1px 1px $white1, -1px -1px $white1, -1px 1px $white1, 1px -1px $white1;
+          }
+        }
+      }
+
+      .search-arts {
+        input[type="text"] {
+          border: 1px solid $white1;
+          color: $white1;
+        }
+        a {
+          img {
+            filter: brightness(0%);
+          }
+        }
+      }
+
+      .select-box {
+        button {
+          background-color: $black;
+          border: 1px solid $white1;
+          color: $white1;
+
+          &:hover {
+            background-color: $black3;
+          }
+
+
+          &:focus ~ .options {
+            border-bottom: 1px solid $black !important;
+          }
+        }
+
+        .options {
+          background-color: $black;
+          color: $white1;
+          border: 1px solid $white1;
+          border-top: none;
+
+          input {
+            &:checked + label:before {
+              color: $white1;
+            }
+          }
+
+          label{
+
+            &:hover {
+              background-color: $white3;
+            }
+          }
+        }
+      }
+    }
+
+    .one-article {
+      background-color: $white2;
+      border: 1px solid $black;
+      box-shadow: 4px 4px $white2, 8px 8px $black, 12px 12px $white2, 16px 16px $black;
+
+      &:hover {
+        border: 1px solid $black;
+        box-shadow: 4px 4px $white2, 8px 8px $black,
+      }
+
+      a {
+        background: $black;
+        text-decoration: none;
+        color: $white1;
+        box-shadow: -2px 2px $black2, -5px 5px $black;
+        &:visited {
+          color: #616161;
+        }
+        &:hover {
+          box-shadow: -2px 2px $black2, -10px 10px $black;
+        }
+      }
+    }
+  }
+
+  .mobile-menu {
+    button {
+      color: $black;
+      border-bottom: 1px solid $black;
+      background-color: transparent;
+      &:hover {
+        border: 1px solid $black;
+      }
+    }
+  }
+
+  .guide-page > .content-header > div:nth-child(2) {
+    box-shadow: 8px 8px $black;
+    &:hover {
+      box-shadow: -8px -8px $black;
+    }
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+
+    -webkit-text-fill-color: white;
+    -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+}
+
+
+
