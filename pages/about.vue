@@ -27,11 +27,11 @@
         </div>
       </form>
       <!--/noindex-->
-      <b>Мой email: swenliw@gmail.com</b><img src="/images/icons/copy.png"><br>
-      <b>Мой телефон:</b> +79042374704 <img src="/images/icons/copy.png"><br>
-      <b>Мой вк:</b> @swenlii <br>
-      <b>Мой стим:</b> eerina_d <br>
-      <b>Мой сайт:</b> портфолио <br>
+      <b>Мой email:</b> <a href="mailto:swenliw@gmail.ru">swenliw@gmail.ru</a><br>
+      <b>Мой telegram:</b> <a href="https://t.me/swenlii">t.me/swenlii</a><br>
+      <b>Мой вк:</b> <a href="https://vk.com/swenlii">vk.com/swenlii</a> <br>
+      <b>Мой github:</b> <a href="https://github.com/swenli">github.com/swenli</a> <br>
+      <b>Мой сайт:</b> <a href="https://swenlii.com">swenlii.com</a> <br>
     </section>
   </div>
 </template>

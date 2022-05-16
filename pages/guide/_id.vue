@@ -2,7 +2,7 @@
   <div class="guide-page" onclick="searchClick()" v-if="guide">
     <div class="content-header">
       <div>
-        <h1 first-word="HTML">{{ guide.title }}</h1>
+        <h1 :first-word="guide.title">{{ guide.title }}</h1>
         <p>{{ guide.info }}</p>
       </div>
       <div>{{ countArts }} / {{ guide.arts.length }}</div>

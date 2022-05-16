@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <div class="library-content" v-if="arts">
+    <div class="library-content" v-if="arts && arts.length > 0">
       <div style="display: none;"></div>
       <router-link :to="'/article/' + art.art_id" v-for="art in arts" :key="'library-art-' + art.id" @click.native="clickLink(art.art_id)">
         <h4>{{ art.title }}</h4>

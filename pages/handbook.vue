@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <div class="guides-content">
+    <div class="guides-content" v-if="handarr && handarr.length > 0">
       <div class="front-end" v-for="hb in handarr">
         <h3>{{hb.text}}</h3>
         <p>{{hb.description}}</p>
@@ -26,6 +26,13 @@
           </details>
         </div>
       </div>
+    </div>
+    <div class="empty" v-else>
+      <img src="/images/empty.png" alt="не найдено">
+        <h2>Ничего не найдено.</h2>
+        <p>Возможно вам стоит изменить запрос. Если вы уверены, что это должно работать, свяжитесь с разработчиком на странице
+          <router-link to="/about">"О нас"</router-link>
+        </p>
     </div>
   </div>
 </template>

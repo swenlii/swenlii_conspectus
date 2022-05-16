@@ -12,7 +12,7 @@
               <span class="head-show">Домой</span>
             </router-link>
           </li>
-          <li class="selected">
+          <li class="selected" style="cursor: pointer">
             <div @click="randomArticle">
               <span class="head-show">Рандомная статья</span>
             </div>
@@ -138,7 +138,9 @@ export default {
     },
     async randomArticle () {
        let art_id = await this.$api('info', 'randomArt');
-       await this.$router.push({path: '/article/' + art_id[0].art_id});
+       if (art_id && art_id.length > 0 &&  art_id[0].art_id)
+        await this.$router.push({path: '/article/' + art_id[0].art_id});
+       else console.log("Error! Articles not found!");
     }
   },
   mounted() {
@@ -206,7 +208,7 @@ header {
 
   #big-menu {
     width: 250px;
-    transition: margin-left 1.7s ease, visibility 3s ease;
+    transition: margin-left 1.1s ease, visibility 1s ease;
 
     &.hide-menu {
       margin-left: -250px;
@@ -228,7 +230,7 @@ header {
 
   #little-menu {
     z-index: 888;
-    transition: opacity 0.5s ease, visibility 3s ease, width 2s ease;
+    transition: opacity 0.7s ease, visibility 1s ease, width 0.5s ease;
 
     &.hide-menu {
       opacity: 0;

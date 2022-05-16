@@ -155,8 +155,7 @@ export default {
     try {
       this.articles = await this.$api("articles", "index");
     } catch (e) {
-      console.error(e);
-      throw e;
+      console.error("articles.vue: " + e);
     }
   },
   methods: {
@@ -233,7 +232,7 @@ export default {
           el.description = el.description.replace(regex, '<mark class="highlight">$&</mark>');
 
         } else if (this.searchInside && el.file.length !== 0) {
-          let content = (require('../assets/' + el.file)).code;
+          let content = (require('../static/articles/' + el.file)).code;
           if (content.toLowerCase().includes(this.search.toLowerCase())) {
             ret.push(el);
           }

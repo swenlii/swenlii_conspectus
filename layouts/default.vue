@@ -79,10 +79,9 @@ export default {
   },
   async fetch() {
     try {
-      this.articles = await this.$api("articles", "getall");
+      this.articles = await this.$api("articles", "index");
     } catch (e) {
-      console.error(e);
-      throw e;
+      console.error("default.vue: " + e);
     }
   }
 };
@@ -92,6 +91,7 @@ export default {
 .conspectus {
   font-size: 7em;
   margin-top: 0;
+  position: relative;
 
   &.close {
     font-size: 3em;

@@ -31,15 +31,15 @@
         <p>Привет! Я создатель этого сайта. Буду краток. Это сайт создан мной для меня. Не претендую на
           уникальность контента, но постараюсь изложить максимум информации в доступной форме. Почему мне
           можно верить? Потому что я имею опыт в программировании и разработке. Более подробно в портфолио.</p>
-        <a href="https://developer.mozilla.org/ru/docs/Web/CSS/transform">GO TO PORTFOLIO</a>
+        <a href="https://swenlii.com">GO TO PORTFOLIO</a>
       </div>
       <div class="second-block">
         <div class="last-art">
-          <h3>{{ last ? last.title : '' }}</h3>
+          <h3>{{ last && last.title ? last.title : '' }}</h3>
           <img src="/images/image-2.jpg">
-          <p>{{last ? last.description : ''}}</p>
+          <p>{{last && last.description ? last.description : ''}}</p>
 
-          <router-link :to="'/article/' + (last ? last.art_id : 'title')">Читать      ⟶</router-link>
+          <router-link :to="'/article/' + (last && last.art_id ? last.art_id : 'title')">Читать      ⟶</router-link>
         </div>
         <div class="changes">
           <h3>Обновления на сайте</h3>
@@ -173,7 +173,7 @@ export default {
 
   details div {
     padding: 1.5em 1em 1em 1em;
-    transition: 3s all ease;
+    transition: 1s all ease;
     background-color: $white2;
     border: 1px solid $black;
     margin: -6.5em 2em 0 2em;

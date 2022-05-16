@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>mail</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital@1&family=Oswald:wght@500&family=PT+Mono&display=swap" rel="stylesheet"> 
+  </head>
+  <body>
+    <main class="main">
+      <div class="all-mail">
+        <div class="logo"><a href="#"><img src="https://d29fhpw069ctt2.cloudfront.net/icon/image/39127/preview.png"></a><a href="#">Conspectus</a></div>
+        <img class="main-img" src="https://images.unsplash.com/photo-1585829365295-ab7cd400c167?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80">
+        <h2 class="main-head">Новая статья!</h2>
+        <div class="text-mail">
+          <p>Я здесь только чтобы сообщить, что на моем сайте появилась новая статья. На этот раз на тему "HTML"</p>
+          <h4>Заголовок статьи</h4>
+          <p>Описание статьи содержит минимум 50 символов. Еще одно предложение.</p>
+          <p class="signature">С уважением, swenlii</p>
+        </div>
+        <a class="read" href="conspectus.com">Читать</a>
+        <div class="footer">
+          <a class="unsubscribe" href="conspectus.com">Отписаться</a>
+        </div>
+      
+      </div>
+    </main>
+    
+    
+    <style>
+      .main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2em;
+      }
+      .all-mail {
+        font-family: 'PT Mono', monospace;
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.9);
+        font-weight: 400;
+        letter-spacing: 0.03em;
+        max-width: 450px;
+        background: #c1c1c1;
+        color: #1f1f1f;
+        padding: 2.5em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      .logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin: 1.3em 0 1.8em 0
+      }
+      .logo * {
+        display: block;
+      }
+      .logo img {
+        width: 30px;
+      }
+      .logo a {
+        font-family: 'EB Garamond', serif;
+        font-size: 1.5em;
+        color: #1f1f1f;
+        text-decoration: none;
+      }
+      .main-img {
+        width: 380px;
+        margin: 0.7em auto;
+        display: block;
+        filter: grayscale(100%);
+      }
+      .main-head {
+        font-family: 'Oswald', sans-serif;
+        font-size: 2em;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        text-align: center;
+      }
+      .text-mail {
+        text-align: center;
+      }
+      .read {
+        background: #1f1f1f;
+        color: #fdfdfd;
+        box-shadow: -2px 2px 0 #c1c1c1, -5px 5px 0 #1f1f1f;
+        padding: 0.7em 1em;
+        display: block;
+        width: max-content;
+        margin: 1em auto;
+        text-decoration: none;
+        text-align: center;
+        transition: 0.3s all ease;
+      }
+      .read:hover {
+        background-color: #3d3d3d;
+        box-shadow: -2px 2px 0 #c1c1c1, -2px 2px 0 #3d3d3d;
+      }
+      .signature {
+        font-style: italic;
+        font-family: 'EB Garamond', serif;
+        font-size: 1.3em;
+      }
+      .footer {
+        margin-top: 1.7em;
+        text-align: center;
+        font-size: 10px;
+        color: #999999;
+        width: 80%;
+      }
+      .unsubscribe {
+        font-size: 10px;
+        color: #999999;
+        transition: 0.3s all ease;
+      }
+      .unsubscribe:hover {
+        color: #1f1f1f;
+      }
+
+    </style>
+  </body>
+</html>

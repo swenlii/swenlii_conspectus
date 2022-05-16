@@ -1,7 +1,8 @@
 const mysql = require('mysql2/promise');
 
 async function query (sql, params = []) {
-  const connection = await mysql.createConnection({
+  try {
+    const connection = await mysql.createConnection({
     host: "127.0.0.1",
     user: "swenlii",
     database: "conspectus",
@@ -11,8 +12,12 @@ async function query (sql, params = []) {
   let [ret] = await connection.query(sql, params);
 
   connection.end();
-
   return ret;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+  
 }
 
 export {query}

@@ -10,14 +10,20 @@
       </div>
     </div>
 
-    <div class="cont">
-      <div v-for="ch in changes">
+    <div class="cont" v-if="changes && changes.length > 0">
+      <div v-for="ch in changes" :key="'change' + ch.id">
         <h2>{{ ch.title }}</h2>
         <p>{{ ch.date2 }}</p>
         <p v-html="ch.html"></p>
       </div>
     </div>
-
+    <div class="empty" v-else>
+      <img src="/images/empty.png" alt="не найдено">
+        <h2>Ничего не найдено.</h2>
+        <p>Возможно вам стоит изменить запрос. Если вы уверены, что это должно работать, свяжитесь с разработчиком на странице
+          <router-link to="/about">"О нас"</router-link>
+        </p>
+    </div>
   </div>
 </template>
 

@@ -6,6 +6,16 @@ export default async (req, res, next) => {
   let method = url.pop();
   let controller = url.slice(1).join("/");
   let api = require('./' + controller);
-  let result = await api[method](req.params);
-  res.end(JSON.stringify(result));
+  if (!api[method]) {
+    console.error(`Not found method ${controller}.${method} in api folder`);
+    return null;
+  }
+  try {
+    let result = await api[method](req.params);
+    res.end(JSON.stringify(result));
+  }
+  catch (e) {
+    res.end(e.message);
+  }
+  
 };

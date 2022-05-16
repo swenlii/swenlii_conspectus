@@ -7,12 +7,12 @@
           <div class="photo" v-if="article.img">
             <img :src="'/images/' + article.img" alt="">
           </div>
-          <p class="about-art">{{ article.desc }}</p>
+          <p v-if="article.description && article.description.length > 0" class="about-art">{{ article.description }}</p>
           <p class="path-to-art">{{ article.date2 }} / <span v-for="(cat, ind) in this.article.cats" :key="'category-' + cat + article.art_id"><NuxtLink :to="'/articles?category=' + cat">{{ categories[cat] }}</NuxtLink><span v-if="ind !== article.cats.length-1"> - </span></span></p>
 
           <div id="art-content" v-html="article.content"></div>
 
-          <p class="art-tags"><span v-for="(tag, ind) in this.article.tags" :key="'tag-' + ind"><nuxt-link :to="'/articles?tags=' + tag">{{ tag }}</nuxt-link></span></p>
+          <p class="art-tags" v-if="this.article.tags && this.article.tags.length > 0"><span v-for="(tag, ind) in this.article.tags" :key="'tag-' + ind"><nuxt-link :to="'/articles?tags=' + tag">{{ tag }}</nuxt-link></span></p>
           <div class="btn-group">
             <ShareNetwork
               network="facebook"
@@ -99,7 +99,7 @@
           </div>
         </section>
       </article>
-      <section class="aside-art" v-if="article.dopcon" :class="showAside === 1 ? 'open-aside' : ''" :style="this.width < 700 ? 'display: none' : ''">
+      <section class="aside-art" v-if="article.dopcon && article.dopconarr" :class="showAside === 1 ? 'open-aside' : ''" :style="this.width < 700 ? 'display: none' : ''">
         <input :id="'tab-name' + (ind + 1)" type="radio" name="tab-name" v-for="(aside, ind) in this.article.dopconarr" :key="'tab-name' + (ind + 1)" :placeholder="aside.name" :checked="ind === 0">
 
         <div class="tabs-menu">
@@ -172,12 +172,14 @@
           </div>
         </div>
       </div>
-      <div class="sim-arts">
+      <div class="sim-arts" v-if="article.sim_arts.length > 0">
         <h3>Почитайте еще это</h3>
         <div class="one-sim-arts" v-for="(art, ind) in article.sim_arts" :key="'sim-art-'+ind">
-          <h4>{{ art.title }}</h4>
-          <p>{{ art.desc }}</p>
+          <div v-if="art">
+            <h4>{{ art.title}}</h4>
+          <p>{{ art.desc}}</p>
           <div><router-link :to="'/article/' + art.art_id">Почитать</router-link></div>
+          </div>
         </div>
       </div>
     </aside>
@@ -398,11 +400,11 @@ export default {
       this.comms = await this.$api('articles', 'comments', { id: this.$route.params.id });
     }
     this.article.cats = this.article.categories.split(',');
-    this.article.tags = this.article.tags.split(',');
+    this.article.tags = this.article.tags && this.article.tags.length > 0 ? this.article.tags.split(',') : [];
     if (this.article.sim_arts)
     this.article.sim_arts = await this.$api('articles', 'sim_arts', {ids: this.article.sim_arts});
 
-    this.article.content = (require('../../assets/' + this.article.file)).code;
+    this.article.content = (require('../../static/articles/' + this.article.file)).code;
 
     this.$nextTick(() => {
       if (process.client) {
@@ -871,6 +873,8 @@ export default {
         padding-right: 1em;
         transition: 0.3s all ease;
         color: $black;
+        min-width: 60px;
+        max-width: 60px;
 
         &:hover {
           background-color: $white3;
@@ -1050,9 +1054,6 @@ export default {
         h4 {
           margin-top: 0;
           margin-bottom: 0;
-        }
-
-        p {
         }
 
         div {
