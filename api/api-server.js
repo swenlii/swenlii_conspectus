@@ -10,6 +10,7 @@ export default async (req, res, next) => {
     console.error(`Not found method ${controller}.${method} in api folder`);
     return null;
   }
+  
   try {
     let result = await api[method](req.params);
     res.end(JSON.stringify(result));

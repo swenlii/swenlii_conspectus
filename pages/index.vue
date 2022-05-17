@@ -55,7 +55,11 @@
       <!--noindex-->
       <form class="email-spam" v-on:mouseover="this.spamMouseOver" v-on:mouseout="this.spamMouseOut" v-on:submit.prevent="subscribe ()">
         <input type="email" placeholder="Подпишись на рассылку!" v-model="emailSpam" id="spamEmail" autocomplete="email" required>
-        <input type="submit" value="Подписаться!">
+        <div class="submit">
+          <div id="loading"></div>
+          <input type="submit" value="Подписаться!">
+        </div>
+        
         <!--/noindex-->
       </form>
     </section>
@@ -72,9 +76,12 @@ export default {
       last: null
     }
   },
-  async mounted() {
-    this.last = await this.$api('articles', 'last');
-    this.last = this.last[0];
+  async fetch() {
+    let con = await this.$api('info','checkconection');
+    if (con === 'ok') {
+      this.last = await this.$api('articles', 'last');
+      this.last = this.last[0];
+    }
   },
 
   head() {
@@ -102,8 +109,10 @@ export default {
       document.getElementById('spamEmail').placeholder = "Подпишись на рассылку!";
     },
     async subscribe () {
+      document.getElementById('loading').classList.add('on');
       await this.$api('info', 'subscribe', {email: document.getElementById('spamEmail').value});
       alert('Спасибо за подписку!');
+      document.getElementById('loading').classList.remove('on');
     }
   }
 }
@@ -192,10 +201,6 @@ export default {
 
   details[open] div {
     margin: -0.5em 2em 10px 2em;
-  }
-
-  details:nth-child(2n) summary {
-
   }
 
   .other-info {
@@ -301,6 +306,7 @@ export default {
       border-top: 1px solid $black;
       display: flex;
       justify-content: flex-start;
+      align-items: center;
       position: relative;
       flex-wrap: wrap;
 
@@ -315,6 +321,25 @@ export default {
         padding: 0.5em 1em;
       }
 
+      .submit {
+        display: flex;
+        align-items: center;
+      }
+
+      #loading {
+        width: 30px;
+        height: 30px;
+        background-image: url("/images/icons/time.png");
+        background-size: contain;
+        margin: 0.5em;
+        display: none;
+
+        &.on {
+          display:block;
+          animation: load 0.9s infinite ;
+        }
+      }
+
       input[type="submit"] {
         background-color: $black;
         border: none;
@@ -327,7 +352,7 @@ export default {
         &:hover {
           padding: 0.2rem 3em;
           background-color: $black2;
-          box-shadow: 1px 1px $white2, 10px 10px $black2;
+          box-shadow: 1px 1px $white2, 6px 6px $black2;
           color: $white1;
         }
       }

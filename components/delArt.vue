@@ -10,7 +10,10 @@
           <option selected disabled hidden>Статьи</option>
           <option v-for="(art, i) in articles" :value="i" :key="'art-' + art.art_id">{{art.title}}</option>
         </select>
-        <input type="submit">
+        <div class="submit">
+          <input type="submit">
+          <div id="loading"></div>
+        </div>
       </div>
 
       <div class="info-art" v-if="oneart">
@@ -43,18 +46,24 @@ export default {
   },
   async fetch() {
     try {
-      this.articles = await this.$api("articles", "index");
+      let con = await this.$api('info','checkconection');
+      if (con === 'ok') {
+        this.articles = await this.$api("articles", "index");
+      }
     } catch (e) {
       console.error("addGuide.vue: " + e);
     }
   },
   methods: {
     async delArtNow () {
+      document.getElementById('loading').classList.add('on');
       let ret = await this.$api("articles", "delart", {id: this.oneart.art_id, img: this.oneart.img});
       if (ret === 'ok')
         alert('Статья '+ this.oneart.art_id + ' удалена');
       else 
         alert(ret);
+
+      document.getElementById('loading').classList.remove('on');
     },
     async changeArt(event) {
       this.oneart = this.articles[event.target.value];
@@ -100,6 +109,24 @@ export default {
     padding: 0.2em 0.7em;
     cursor: pointer;
   }
+
+  .submit {
+        display: flex;
+      }
+
+  #loading {
+      width: 30px;
+      height: 30px;
+      background-image: url("/images/icons/time.png");
+      background-size: contain;
+      margin: 0.5em;
+      opacity: 0;
+      
+      &.on {
+        opacity: 1;
+        animation: load 0.9s infinite ;
+      }
+    }
   .info-art {
     border: 1px solid $black;
     padding: 1em;

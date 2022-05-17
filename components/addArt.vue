@@ -82,7 +82,10 @@
         </div>
       </div>
       
-      <input type="submit">
+      <div class="submit">
+        <input type="submit">
+        <div id="loading"></div>
+      </div>
     </form>
   </div>
 </template>
@@ -188,7 +191,10 @@ export default {
   },
   async fetch() {
     try {
-      this.categories = await this.$api("info", "categories");
+      let con = await this.$api('info','checkconection');
+      if (con === 'ok') {
+        this.categories = await this.$api("info", "categories");
+      }
     } catch (e) {
       console.error("addArt.vue: " + e);
     }
@@ -224,12 +230,15 @@ export default {
         artDop:    this.artDop,   
         artDopCon: this.artDop ? this.artDopCon : null
       }
+      document.getElementById('loading').classList.add('on');
       let res = await this.$api('articles', 'add', data);
       console.log(res);
       if (res === 'ok')
         alert('Статья сохранена!')
       else 
         alert(res);
+
+      document.getElementById('loading').classList.remove('on');
     },
     add1 () {
       this.artText += `
@@ -457,6 +466,25 @@ export default {
         padding: 0.2em 0.7em;
         cursor: pointer;
       }
+
+      .submit {
+        display: flex;
+      }
+
+
+      #loading {
+      width: 30px;
+      height: 30px;
+      background-image: url("/images/icons/time.png");
+      background-size: contain;
+      margin: 0.5em;
+      opacity: 0;
+      
+      &.on {
+        opacity: 1;
+        animation: load 0.9s infinite ;
+      }
+    }
     }
     .first-form, .second-form, .third-form {
       > div {

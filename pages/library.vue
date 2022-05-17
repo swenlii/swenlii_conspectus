@@ -72,7 +72,10 @@ export default {
     }
   },
   async fetch () {
-    this.arts = await this.$api('info', 'library');
+    let con = await this.$api('info','checkconection');
+    if (con === 'ok') {
+      this.arts = await this.$api('info', 'library');
+    }
   }
 }
 </script>

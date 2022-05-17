@@ -163,7 +163,10 @@
           <input type="text" id="com-input2" v-model="userCom" placeholder="Имя..." autocomplete="name" required>
           <label for="com-input"></label>
           <textarea id="com-input" placeholder="Напиши коментарий..." required></textarea>
-          <input type="submit" >
+          <div class="submit">
+            <input type="submit">
+            <div id="loading"></div>
+          </div>
         </form>
         <div class="one-coment" v-for="(com, ind) in comms" :key="'comment' + ind">
           <div>
@@ -365,6 +368,8 @@ export default {
     },
     async writeComment () {
 
+      document.getElementById('loading').classList.add('on');
+
       let text = document.getElementById('com-input').value;
       let name = this.userCom;
 
@@ -383,6 +388,7 @@ export default {
       document.getElementById('com-input').value = '';
       document.getElementById('com-input2').value = '';
       alert('комент написан');
+      document.getElementById('loading').classList.remove('on');
     },
     scrollFix: function(hashbang) {
       if (hashbang && document.querySelector(hashbang)) {
@@ -392,26 +398,29 @@ export default {
     }
   },
   async fetch () {
-    if (this.$route.fullPath.includes('/article-template')) {
-      this.article = await this.$api('articles', 'get', { id: 'template'});
-      this.comms = await this.$api('articles', 'comments', { id: 'template' });
-    } else {
-      this.article = await this.$api('articles', 'get', { id: this.$route.params.id});
-      this.comms = await this.$api('articles', 'comments', { id: this.$route.params.id });
-    }
-    this.article.cats = this.article.categories.split(',');
-    this.article.tags = this.article.tags && this.article.tags.length > 0 ? this.article.tags.split(',') : [];
-    if (this.article.sim_arts)
-    this.article.sim_arts = await this.$api('articles', 'sim_arts', {ids: this.article.sim_arts});
-
-    this.article.content = (require('../../static/articles/' + this.article.file)).code;
-
-    this.$nextTick(() => {
-      if (process.client) {
-        this.createTooltips();
-        hljs.highlightAll();
+    let con = await this.$api('info','checkconection');
+    if (con === 'ok') {
+      if (this.$route.fullPath.includes('/article-template')) {
+        this.article = await this.$api('articles', 'get', { id: 'template'});
+        this.comms = await this.$api('articles', 'comments', { id: 'template' });
+      } else {
+        this.article = await this.$api('articles', 'get', { id: this.$route.params.id});
+        this.comms = await this.$api('articles', 'comments', { id: this.$route.params.id });
       }
-    });
+      this.article.cats = this.article.categories.split(',');
+      this.article.tags = this.article.tags && this.article.tags.length > 0 ? this.article.tags.split(',') : [];
+      if (this.article.sim_arts)
+      this.article.sim_arts = await this.$api('articles', 'sim_arts', {ids: this.article.sim_arts});
+  
+      this.article.content = (require('../../static/articles/' + this.article.file)).code;
+  
+      this.$nextTick(() => {
+        if (process.client) {
+          this.createTooltips();
+          hljs.highlightAll();
+        }
+      });
+    }
 
   },
   async mounted() {
@@ -1002,6 +1011,24 @@ export default {
           left: -6px;
           bottom: -6px;
         };
+      }
+
+      .submit {
+        display: flex;
+      }
+
+      #loading {
+        width: 30px;
+        height: 30px;
+        background-image: url("/images/icons/time.png");
+        background-size: contain;
+        margin: 0.5em;
+        display: none;
+
+        &.on {
+          display: block;
+          animation: load 0.9s infinite ;
+        }
       }
 
       .one-coment {

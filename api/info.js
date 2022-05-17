@@ -98,4 +98,34 @@ async function addchanges({changesName, changesText}) {
   return 'ok'
 }
 
-export {categories, library, comment, subscribe, sendMail, randomArt, changes, adminLogin, addcat, addchanges}
+async function checkconection () {
+  console.log('check conection');
+  try {
+    const mysql = require('mysql2/promise');
+
+    const connection = await mysql.createConnection({
+      host: "127.0.0.1",
+      user: "swenlii",
+      database: "conspectus",
+      password: "O?umAOwbCG{H"
+    });
+
+    connection.connect((err) => {
+      if(err){
+        console.log('ERROR when connection to database');
+        return(err.message);
+      }
+      console.log('I am here');
+    });
+
+    connection.end();
+
+    console.log('error not found');
+    return 'ok'
+
+  } catch (err) {
+    return (err.message);
+  }
+}
+
+export {categories, library, comment, subscribe, sendMail, randomArt, changes, adminLogin, addcat, addchanges, checkconection}

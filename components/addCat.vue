@@ -12,7 +12,10 @@
         <input type="text" name="catName" v-model="catName" placeholder="Имя категории" required>
       </div>
       
-      <input type="submit">
+      <div class="submit">
+        <input type="submit">
+        <div id="loading"></div>
+      </div>
     </form>
   </div>
 </template>
@@ -26,9 +29,6 @@ export default {
       catName: ''
     }
   },
-  async mounted() {
-
-  },
 
   methods: {
     async addCatNow() {
@@ -37,12 +37,15 @@ export default {
         catLink: this.catLink,
         catName: this.catName
       }
+      document.getElementById('loading').classList.add('on');
       let res = await this.$api('info', 'addcat', data);
       console.log(res);
       if (res === 'ok')
         alert('Категория добавлена!')
       else 
         alert(res);
+
+      document.getElementById('loading').classList.remove('on');
     }
   }
 }
@@ -81,6 +84,24 @@ export default {
         padding: 0.2em 0.7em;
         cursor: pointer;
       }
+
+      .submit {
+        display: flex;
+      }
+
+      #loading {
+      width: 30px;
+      height: 30px;
+      background-image: url("/images/icons/time.png");
+      background-size: contain;
+      margin: 0.5em;
+      opacity: 0;
+      
+      &.on {
+        opacity: 1;
+        animation: load 0.9s infinite ;
+      }
+    }
   }
 }
 </style>

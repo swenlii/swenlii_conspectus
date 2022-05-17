@@ -65,7 +65,10 @@
           <button @click.delete="() => deleteArt(ind, art.id)">Удалить</button>
         </div>
       </div>
-      <input type="submit">
+      <div class="submit">
+        <input type="submit">
+        <div id="loading"></div>
+      </div>
     </form>
   </div>
 </template>
@@ -90,8 +93,11 @@ export default {
   },
   async fetch() {
     try {
-      this.guides = await this.$api("guides", "index");
-      this.articles = await this.$api("articles", "index");
+      let con = await this.$api('info','checkconection');
+      if (con === 'ok') {
+        this.guides = await this.$api("guides", "index");
+        this.articles = await this.$api("articles", "index");
+      }
     } catch (e) {
       console.error("editGuide.vue: " + e);
     }
@@ -109,6 +115,7 @@ export default {
         guideArts: this.guideArts,
         delArts: this.delArts.length > 0 ? this.delArts : null
       }
+      document.getElementById('loading').classList.add('on');
 
       let res = await this.$api('guides', 'edit', data);
       console.log(res);
@@ -116,6 +123,8 @@ export default {
         alert('Гайд отредактирован.')
       else 
         alert(res);
+
+      document.getElementById('loading').classList.remove('on');
     },
     changeGuide (event) {
       this.guideId = this.guides[event.target.value].guide_id;
@@ -200,6 +209,24 @@ export default {
         padding: 0.2em 0.7em;
         cursor: pointer;
       }
+
+      .submit {
+        display: flex;
+      }
+
+      #loading {
+      width: 30px;
+      height: 30px;
+      background-image: url("/images/icons/time.png");
+      background-size: contain;
+      margin: 0.5em;
+      opacity: 0;
+      
+      &.on {
+        opacity: 1;
+        animation: load 0.9s infinite ;
+      }
+    }
   }
   .add-arts {
     padding: 0.7em 1.3em;

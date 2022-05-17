@@ -118,10 +118,13 @@ export default {
     }
   },
   async fetch() {
-    if (this.$route.fullPath === '/guide-template') {
-      this.guide = await this.$api('guides', 'get', {id: 'template'});
-    } else {
-      this.guide = await this.$api('guides', 'get', {id: this.$route.params.id});
+    let con = await this.$api('info','checkconection');
+    if (con === 'ok') {
+      if (this.$route.fullPath === '/guide-template') {
+        this.guide = await this.$api('guides', 'get', {id: 'template'});
+      } else {
+        this.guide = await this.$api('guides', 'get', {id: this.$route.params.id});
+      }
     }
   },
 }

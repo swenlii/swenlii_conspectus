@@ -141,6 +141,7 @@ export default {
     };
   },
   async fetch() {
+
     this.pagePath = this.$route.path.slice(1);
     if (this.$route.query.search)
       this.search = this.$route.query.search;
@@ -153,7 +154,10 @@ export default {
     if (this.$route.query.inside)
       this.searchInside = true;
     try {
-      this.articles = await this.$api("articles", "index");
+      let con = await this.$api('info','checkconection');
+      if (con === 'ok') {
+        this.articles = await this.$api("articles", "index");
+      }
     } catch (e) {
       console.error("articles.vue: " + e);
     }

@@ -52,8 +52,11 @@ module.exports = {
       changes: []
     }
   },
-  async mounted () {
-    this.changes = await this.$api('info', 'changes');
+  async fetch () {
+    let con = await this.$api('info','checkconection');
+    if (con === 'ok') {
+      this.changes = await this.$api('info', 'changes');
+    }
   }
 }
 </script>

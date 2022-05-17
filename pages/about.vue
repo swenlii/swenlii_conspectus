@@ -22,9 +22,10 @@
         <div class="form-str">
           <textarea placeholder="Текст" v-model="m_mail"></textarea>
         </div>
-        <div>
-          <button type="submit">Отправить</button>
-        </div>
+        <div class="submit">
+            <button type="submit">Отправить</button>
+            <div id="loading"></div>
+          </div>
       </form>
       <!--/noindex-->
       <b>Мой email:</b> <a href="mailto:swenliw@gmail.ru">swenliw@gmail.ru</a><br>
@@ -66,6 +67,7 @@ export default {
   },
   methods: {
     async sendMail () {
+      document.getElementById('loading').classList.add('on');
       let data = {
         name: this.m_sender,
         email: this.m_email,
@@ -78,6 +80,8 @@ export default {
         alert('Письмо отправлено');
       else
         alert('Произошла ошибка' + res);
+
+      document.getElementById('loading').classList.remove('on');
     }
   }
 }
@@ -214,6 +218,25 @@ export default {
         box-shadow: 2px 2px $white2, 8px 8px $black2;
       }
     }
+
+    .submit {
+        display: flex;
+        align-items: center;
+      }
+
+      #loading {
+        width: 30px;
+        height: 30px;
+        background-image: url("/images/icons/time.png");
+        background-size: contain;
+        margin: 0.5em;
+        display: none;
+
+        &.on {
+          display:block;
+          animation: load 0.9s infinite ;
+        }
+      }
   }
 }
 </style>

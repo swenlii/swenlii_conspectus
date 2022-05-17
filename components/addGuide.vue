@@ -51,7 +51,10 @@
           <textarea name="guideDesc" v-model="art.descForGuide" required></textarea>
         </div>
       </div>
-      <input type="submit">
+      <div class="submit">
+        <input type="submit">
+        <div id="loading"></div>
+      </div>
     </form>
   </div>
 </template>
@@ -73,7 +76,10 @@ export default {
   },
   async fetch() {
     try {
-      this.articles = await this.$api("articles", "index");
+      let con = await this.$api('info','checkconection');
+      if (con === 'ok') {
+        this.articles = await this.$api("articles", "index");
+      }
     } catch (e) {
       console.error("addGuide.vue: " + e);
     }
@@ -91,12 +97,15 @@ export default {
         guideKey: this.guideKey,
         guideArts: this.guideArts
       }
+      document.getElementById('loading').classList.add('on');
       let res = await this.$api('guides', 'add', data);
       console.log(res);
       if (res === 'ok')
         alert('Добавлен новый гайд.')
       else 
         alert(res);
+
+      document.getElementById('loading').classList.remove('on');
     },
     addArt (event) {
       console.log('add ' + this.articles[event.target.value].title);
@@ -167,6 +176,24 @@ export default {
         padding: 0.2em 0.7em;
         cursor: pointer;
       }
+
+      #loading {
+      width: 30px;
+      height: 30px;
+      background-image: url("/images/icons/time.png");
+      background-size: contain;
+      margin: 0.5em;
+      opacity: 0;
+
+      .submit {
+        display: flex;
+      }
+      
+      &.on {
+        opacity: 1;
+        animation: load 0.9s infinite ;
+      }
+    }
   }
   .add-arts {
     padding: 0.7em 1.3em;

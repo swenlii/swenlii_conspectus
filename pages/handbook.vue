@@ -11,7 +11,7 @@
     </div>
 
     <div class="guides-content" v-if="handarr && handarr.length > 0">
-      <div class="front-end" v-for="hb in handarr">
+      <div class="front-end" v-for="(hb, ind) in handarr" :key="'hb' + ind">
         <h3>{{hb.text}}</h3>
         <p>{{hb.description}}</p>
         <div class="guide-details">
@@ -63,9 +63,12 @@ export default {
       ],
     };
   },
-  async mounted () {
-    this.guides = await this.$api('guides', 'index');
-    this.handbooks = await this.$api('guides', 'handbook');
+  async fetch () {
+    let con = await this.$api('info','checkconection');
+    if (con === 'ok') {
+      this.guides = await this.$api('guides', 'index');
+      this.handbooks = await this.$api('guides', 'handbook');
+    }
   },
   computed: {
     handarr () {
@@ -209,7 +212,6 @@ export default {
       color: inherit;
       transition: 0.6s ease all;
       font-size: 1.4em;
-      rotation-point: 50% 50%;
       transform-origin: 50% 50%;
     }
 

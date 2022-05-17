@@ -79,7 +79,13 @@ export default {
   },
   async fetch() {
     try {
-      this.articles = await this.$api("articles", "index");
+      let con = await this.$api('info','checkconection');
+      if (con === 'ok') {
+        this.articles = await this.$api("articles", "index");
+      } else {
+        console.log(con);
+        alert(`ERROR! I can't connection to database! \n${con}`);
+      }
     } catch (e) {
       console.error("default.vue: " + e);
     }

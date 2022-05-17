@@ -4,12 +4,12 @@
     * - обязательны к заполнению
     <div>
       <label>Выбери статью*</label>
-      <select @change="changeArt($event)" v-if="articles">
+      <select @change="changeArt($event)" v-if="articles && articles.length > 0">
         <option selected disabled hidden>Статьи</option>
         <option v-for="(art, i) in articles" :value="i" :key="'art-' + art.guide_id">{{art.title}}</option>
       </select>
     </div>
-    <form v-on:submit.prevent="editartnow()" v-if="artId.length > 0">
+    <form v-on:submit.prevent="editartnow()" v-if="artId && artId.length > 0">
       <h3>Основные данные</h3>
       <div class="first-form">
         <div>
@@ -88,7 +88,11 @@
         </div>
       </div>
       
-      <input type="submit">
+      <div class="submit">
+        <input type="submit">
+        <div id="loading"></div>
+      </div>
+      
     </form>
   </div>
 </template>
@@ -116,8 +120,11 @@ export default {
   },
   async fetch() {
     try {
-      this.categories = await this.$api("info", "categories");
-      this.articles = await this.$api("articles", "index");
+      let con = await this.$api('info','checkconection');
+      if (con === 'ok') {
+        this.categories = await this.$api("info", "categories");
+        this.articles = await this.$api("articles", "index");
+      }
     } catch (e) {
       console.error("editArt.vue: " + e);
     }
@@ -141,28 +148,34 @@ export default {
         artDopCon: this.artDop ? this.artDopCon : null
       }
 
+      document.getElementById('loading').classList.add('on');
       let res = await this.$api('articles', 'edit', data);
       console.log(res);
+      
       if (res === 'ok')
         alert('Статья сохранена!')
       else 
         alert(res);
 
+      document.getElementById('loading').classList.remove('on');
+
       console.log(data);
     },
     changeArt(event) {
-      this.artId = this.articles[event.target.value].art_id;    
-      this.artName = this.articles[event.target.value].title;  
-      this.artDesc = this.articles[event.target.value].description;  
-      this.artKeys = this.articles[event.target.value].keywords;  
-      this.artTags = this.articles[event.target.value].tags;  
-      this.artSim = this.articles[event.target.value].sim_arts;   
-      this.artCat = this.articles[event.target.value].categories;   
-      this.artLib = this.articles[event.target.value].lib;  
-      this.artDop = this.articles[event.target.value].dopcon;   
-      this.artDopCon = JSON.stringify(this.articles[event.target.value].dopconarr);
+      if (this.articles && this.articles.length > 0) {
+        this.artId = this.articles[event.target.value].art_id;    
+        this.artName = this.articles[event.target.value].title;  
+        this.artDesc = this.articles[event.target.value].description;  
+        this.artKeys = this.articles[event.target.value].keywords;  
+        this.artTags = this.articles[event.target.value].tags;  
+        this.artSim = this.articles[event.target.value].sim_arts;   
+        this.artCat = this.articles[event.target.value].categories;   
+        this.artLib = this.articles[event.target.value].lib;  
+        this.artDop = this.articles[event.target.value].dopcon;   
+        this.artDopCon = JSON.stringify(this.articles[event.target.value].dopconarr);
 
-      this.artText = (require('../static/articles/' + this.articles[event.target.value].file)).code;
+        this.artText = (require('../static/articles/' + this.articles[event.target.value].file)).code;
+      }
     },
     add1 () {
       this.artText += `
@@ -389,6 +402,24 @@ export default {
       border: none;
       padding: 0.2em 0.7em;
       cursor: pointer;
+    }
+
+    .submit {
+      display: flex;
+    }
+
+    #loading {
+      width: 30px;
+      height: 30px;
+      background-image: url("/images/icons/time.png");
+      background-size: contain;
+      margin: 0.5em;
+      opacity: 0;
+      
+      &.on {
+        opacity: 1;
+        animation: load 0.9s infinite ;
+      }
     }
   }
   .first-form, .second-form, .third-form {

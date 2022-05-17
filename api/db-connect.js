@@ -9,6 +9,15 @@ async function query (sql, params = []) {
     password: "O?umAOwbCG{H"
   });
 
+  connection.connect((err) => {
+    if(err){
+      console.log('ERROR when connection to database');
+    }
+    console.log('I am here');
+  });
+
+  console.log('error not found')
+
   let [ret] = await connection.query(sql, params);
 
   connection.end();
