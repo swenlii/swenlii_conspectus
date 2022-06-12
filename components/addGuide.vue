@@ -76,10 +76,7 @@ export default {
   },
   async fetch() {
     try {
-      let con = await this.$api('info','checkconection');
-      if (con === 'ok') {
-        this.articles = await this.$api("articles", "index");
-      }
+      this.articles = await this.$api("articles", "index");
     } catch (e) {
       console.error("addGuide.vue: " + e);
     }
@@ -87,7 +84,6 @@ export default {
 
   methods: {
     async addGuideNow () {
-      console.log('guide add');
       let data = {
         guideId: this.guideId,
         guideTitle: this.guideName,
@@ -99,7 +95,6 @@ export default {
       }
       document.getElementById('loading').classList.add('on');
       let res = await this.$api('guides', 'add', data);
-      console.log(res);
       if (res === 'ok')
         alert('Добавлен новый гайд.')
       else 
@@ -108,7 +103,6 @@ export default {
       document.getElementById('loading').classList.remove('on');
     },
     addArt (event) {
-      console.log('add ' + this.articles[event.target.value].title);
       this.guideArts.push ({
         id: this.articles[event.target.value].art_id,
         title: this.articles[event.target.value].title,
@@ -180,7 +174,7 @@ export default {
       #loading {
       width: 30px;
       height: 30px;
-      background-image: url("/images/icons/time.png");
+      background-image: url("/images/icons/time.webp");
       background-size: contain;
       margin: 0.5em;
       opacity: 0;

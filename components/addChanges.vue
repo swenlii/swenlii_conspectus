@@ -36,14 +36,12 @@ export default {
 
   methods: {
     async addCatNow() {
-      console.log("add changes");
       let data = {
         changesName: this.changesName,
         changesText: this.changesText
       }
       document.getElementById('loading').classList.add('on');
       let res = await this.$api('info', 'addchanges', data);
-      console.log(res);
       if (res === 'ok')
         alert('Изменения зафиксированны!')
       else 
@@ -101,7 +99,7 @@ export default {
       #loading {
       width: 30px;
       height: 30px;
-      background-image: url("/images/icons/time.png");
+      background-image: url("/images/icons/time.webp");
       background-size: contain;
       margin: 0.5em;
       opacity: 0;

@@ -62,7 +62,7 @@ let code = `<h2 ref="art-point-1">Transition</h2>
 
 Подключают анимацию с помощью свойства animation у нужного селектора:
 <pre><code>div.red {
-	animation: animName 2s;
+	animation: animName 3s;
 }</code></pre>
 
 подобно transition свойство animation так же распределяется на свойства: 

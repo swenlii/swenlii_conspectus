@@ -3,32 +3,32 @@
     <div class="content-header">
       <div>
         <h1 first-word="Учебник">Учебник</h1>
-        <p>В последовательном обучении помогут разбитые по группам статьи, объедененные в мини-учебники, каждый из которых посвящен определенной теме.</p>
+        <p>Хотите изучить веб-программирование и создание сайтов? Нужно изучить определенный язык или фреймворк, но не знаете с чего начать? В последовательном обучении помогут разбитые по группам статьи, объедененные в мини-учебники, каждый из которых посвящен определенной теме. На сайте присутствует отслеживание прогресса вашего обучения с помощью запоминания уже прочитанных статей.</p>
       </div>
       <div>
-        <img src="/images/book-1.jpg" alt="">
+        <img src="/images/book-1.webp" alt="">
       </div>
     </div>
 
-    <div class="guides-content" v-if="handarr && handarr.length > 0">
+    <div class="guides-content" v-if="handbooks && handbooks.length > 0">
       <div class="front-end" v-for="(hb, ind) in handarr" :key="'hb' + ind">
-        <h3>{{hb.text}}</h3>
+        <h2>{{hb.text}}</h2>
         <p>{{hb.description}}</p>
         <div class="guide-details">
           <details v-for="g in hb.guides" :key="'front-g-' + g.id">
             <summary>
               <span class="progress" :style="'width: ' + persentRead(g.arts) + '%'"></span>
-              <span>{{ g.title }}</span>
+              <router-link :to="'/guide/' + g.guide_id">{{ g.title }}</router-link>
               <router-link :to="'/guide/' + g.guide_id">{{ persentRead(g.arts) > 0 ? 'Продолжить' : 'Начать обучение'}} ({{ persentRead(g.arts) }}%)</router-link>
             </summary>
-            <div v-html="g.desc">
+            <div v-html="g.description">
             </div>
           </details>
         </div>
       </div>
     </div>
     <div class="empty" v-else>
-      <img src="/images/empty.png" alt="не найдено">
+      <img src="/images/empty.webp" alt="не найдено">
         <h2>Ничего не найдено.</h2>
         <p>Возможно вам стоит изменить запрос. Если вы уверены, что это должно работать, свяжитесь с разработчиком на странице
           <router-link to="/about">"О нас"</router-link>
@@ -53,27 +53,24 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: 'В последовательном обучении помогут разбитые по группам статьи, объедененные в мини-учебники, каждый из которых посвящен определенной теме.'
+          content: 'Хотите изучить веб-программирование и создание сайтов? Нужно изучить определенный язык или фреймворк, но не знаете с чего начать? В последовательном обучении помогут разбитые по группам статьи, объедененные в мини-учебники, каждый из которых посвящен определенной теме. На сайте присутствует отслеживание прогресса вашего обучения с помощью запоминания уже прочитанных статей.'
         },
         {
           hid: 'keywords',
           name: 'keywords',
-          content: 'обучение, блог, статьи, курсы, гайды'
+          content: 'обучение, блог, статьи, курсы, руководства, front-end'
         }
       ],
     };
   },
   async fetch () {
-    let con = await this.$api('info','checkconection');
-    if (con === 'ok') {
-      this.guides = await this.$api('guides', 'index');
-      this.handbooks = await this.$api('guides', 'handbook');
-    }
+    this.guides = await this.$api('guides', 'index');
+    this.handbooks = await this.$api('guides', 'handbook');
   },
   computed: {
     handarr () {
-      if (!this.guides) return [];
-      if (!this.handbooks) return [];
+      if (!this.guides || this.guides.length === 0) return [];
+      if (!this.handbooks || this.handbooks.length === 0) return [];
       let hba = [];
       this.handbooks.forEach(hbel => {
         hba.push(hbel);
@@ -116,19 +113,20 @@ export default {
     filter: brightness(60%) grayscale(100%);
     min-height: 100%;
     min-width: 100%;
-    animation: 2s to-page;
+    animation: 1s to-page;
   }
 }
 .guides-content {
   display: flex;
   justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
   padding: 1em 3em;
-  margin: auto;
   position: relative;
-  animation: 2s to-top;
+  animation: 0.6s to-top;
   flex-wrap: wrap;
 
-  h3 {
+  h2 {
     @extend .font-style-2;
     margin-top: 0;
     margin-bottom: 0;
@@ -149,7 +147,7 @@ export default {
     margin: 1em;
     color: $white1;
     flex: 1;
-    min-width: 400px;
+    min-width: 300px;
   }
 
   .back-end {
@@ -158,13 +156,13 @@ export default {
     padding: 2em;
     margin: 1em;
     flex: 1;
-    min-width: 400px;
+    min-width: 300px;
   }
 
   details div {
     padding: 1em 3em 1em 2em;
     border: 1px solid $white1;
-    animation: 3s detail-show;
+    animation: 1s detail-show;
     overflow: hidden;
     background-color: $black;
     z-index: 3;

@@ -59,7 +59,7 @@
         </div>
         <div>
           <label>Описание статьи* <br>(Отображается в гайде)</label>
-          <textarea name="guideDesc" v-model="art.desc" required></textarea>
+          <textarea name="guideDesc" v-model="art.description" required></textarea>
         </div>
         <div>
           <button @click.delete="() => deleteArt(ind, art.id)">Удалить</button>
@@ -93,11 +93,8 @@ export default {
   },
   async fetch() {
     try {
-      let con = await this.$api('info','checkconection');
-      if (con === 'ok') {
-        this.guides = await this.$api("guides", "index");
-        this.articles = await this.$api("articles", "index");
-      }
+      this.guides = await this.$api("guides", "index");
+      this.articles = await this.$api("articles", "index");
     } catch (e) {
       console.error("editGuide.vue: " + e);
     }
@@ -115,10 +112,10 @@ export default {
         guideArts: this.guideArts,
         delArts: this.delArts.length > 0 ? this.delArts : null
       }
+      console.log(JSON.stringify(data));
       document.getElementById('loading').classList.add('on');
 
       let res = await this.$api('guides', 'edit', data);
-      console.log(res);
       if (res === 'ok')
         alert('Гайд отредактирован.')
       else 
@@ -130,18 +127,17 @@ export default {
       this.guideId = this.guides[event.target.value].guide_id;
       this.guideName = this.guides[event.target.value].title;
       this.guideType = this.guides[event.target.value].type;
-      this.guideDesc = this.guides[event.target.value].desc;
+      this.guideDesc = this.guides[event.target.value].description;
       this.guideInfo = this.guides[event.target.value].info;
       this.guideKey= this.guides[event.target.value].keywords;
 
       this.guideArts = this.guides[event.target.value].arts;
     },
     addArt (event) {
-      console.log('add ' + this.articles[event.target.value].title);
       this.guideArts.push ({
         id: this.articles[event.target.value].art_id,
         title: this.articles[event.target.value].title,
-        desc: this.articles[event.target.value].description,
+        description: this.articles[event.target.value].description,
         step: '0'
       })
     },
@@ -217,7 +213,7 @@ export default {
       #loading {
       width: 30px;
       height: 30px;
-      background-image: url("/images/icons/time.png");
+      background-image: url("/images/icons/time.webp");
       background-size: contain;
       margin: 0.5em;
       opacity: 0;

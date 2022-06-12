@@ -32,14 +32,12 @@ export default {
 
   methods: {
     async addCatNow() {
-      console.log("add category");
       let data = {
         catLink: this.catLink,
         catName: this.catName
       }
       document.getElementById('loading').classList.add('on');
       let res = await this.$api('info', 'addcat', data);
-      console.log(res);
       if (res === 'ok')
         alert('Категория добавлена!')
       else 
@@ -92,7 +90,7 @@ export default {
       #loading {
       width: 30px;
       height: 30px;
-      background-image: url("/images/icons/time.png");
+      background-image: url("/images/icons/time.webp");
       background-size: contain;
       margin: 0.5em;
       opacity: 0;

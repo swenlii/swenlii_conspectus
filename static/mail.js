@@ -22,11 +22,11 @@ let mail = (header, htmltext, img = '') => {
         <div style="font-family: 'pt mono' , 'roboto mono', 'verdana' , monospace; box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.9); font-weight: 400; letter-spacing: 0.03em; max-width: 450px; background-color: #c1c1c1; color: #1f1f1f; padding: 2.5em;">
           <div style="margin: 1.3em 0 1.8em;">
             <a href="#" style="display: block; font-family: 'EB Garamond', 'Georgia', 'Times New Roman', serif; font-size: 1.5em; color: #1f1f1f; text-decoration: none;">
-              <img src="https://d29fhpw069ctt2.cloudfront.net/icon/image/39127/preview.png" style="display: block; width: 30px; margin: auto;">
+              <img src="https://d29fhpw069ctt2.cloudfront.net/icon/image/39127/preview.png" style="display: block; width: 30px; max-width: 30px; margin: auto;">
             </a>
             <a href="#" style="display: block; font-family: 'EB Garamond', serif; font-size: 1.5em; color: #1f1f1f; text-decoration: none; text-align: center;">Conspectus</a>
           </div>
-          <img src="https://images.unsplash.com/photo-1585829365295-ab7cd400c167?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1170&amp;q=80" style="width: 380px; display: block; filter: grayscale(100%); margin: 0.7em auto;">
+          <img src="${img === '' ? 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1170&amp;q=80' : img}" style="width: 380px; max-width: 380px; display: block; filter: grayscale(100%); margin: 0.7em auto;">
           <h2 style="font-family: 'Oswald', 'Impact', 'Arial Black', sans-serif; font-size: 2em; font-weight: 700; letter-spacing: 0.02em;" align="center">${header}</h2>
           <div style="" align="center">
             ${htmltext}

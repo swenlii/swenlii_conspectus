@@ -32,8 +32,6 @@
 </template>
 
 <script>
-import hljs from "highlight.js";
-import 'highlight.js/styles/github.css';
 export default {
   name: 'delArt',
   data: function () {
@@ -46,10 +44,7 @@ export default {
   },
   async fetch() {
     try {
-      let con = await this.$api('info','checkconection');
-      if (con === 'ok') {
-        this.articles = await this.$api("articles", "index");
-      }
+      this.articles = await this.$api("articles", "index");
     } catch (e) {
       console.error("addGuide.vue: " + e);
     }
@@ -68,14 +63,13 @@ export default {
     async changeArt(event) {
       this.oneart = this.articles[event.target.value];
       let coms = await this.$api("articles", "comments", { id: this.articles[event.target.value].art_id });
-      console.log(coms);
       this.oneart.comments = coms.length;
       this.conttext= (require('../static/articles/' + this.oneart.file)).code;
-      this.$nextTick(() => {
-          if (process.client) {
-            hljs.highlightAll();
-          }
-        });
+      // this.$nextTick(() => {
+      //     if (process.client) {
+      //       hljs.highlightAll();
+      //     }
+      //   });
     },
     getText() {
       this.open = !this.open;
@@ -117,7 +111,7 @@ export default {
   #loading {
       width: 30px;
       height: 30px;
-      background-image: url("/images/icons/time.png");
+      background-image: url("/images/icons/time.webp");
       background-size: contain;
       margin: 0.5em;
       opacity: 0;

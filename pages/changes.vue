@@ -2,11 +2,11 @@
   <div class="changes" @click="$emit('upgrade-search', false)">
     <div class="content-header">
       <div>
-        <h1 first-word="Изменения на">Изменения на сайте</h1>
-        <p>Отслеживайте новые функции сайта, новые статьи и руководства</p>
+        <h1 first-word="Изменения на сайте">Изменения на сайте Conspectus</h1>
+        <p>Страничка для неравнодушных. Отслеживайте новые функции сайта Conspectus, новые статьи и руководства на этой странице.</p>
       </div>
       <div>
-        <img src="/images/work-in-it2.jpg" alt="">
+        <img src="/images/work-in-it2.webp" alt="">
       </div>
     </div>
 
@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="empty" v-else>
-      <img src="/images/empty.png" alt="не найдено">
+      <img src="/images/empty.webp" alt="не найдено">
         <h2>Ничего не найдено.</h2>
         <p>Возможно вам стоит изменить запрос. Если вы уверены, что это должно работать, свяжитесь с разработчиком на странице
           <router-link to="/about">"О нас"</router-link>
@@ -37,7 +37,7 @@ module.exports = {
         {
           hid: 'description',
           name: 'description',
-          content: 'Отслеживайте новые функции сайта Conspectus, новые статьи и руководства',
+          content: 'Страничка для неравнодушных. Отслеживайте новые функции сайта Conspectus, новые статьи и руководства на этой странице.',
         },
         {
           hid: 'keywords',
@@ -53,10 +53,7 @@ module.exports = {
     }
   },
   async fetch () {
-    let con = await this.$api('info','checkconection');
-    if (con === 'ok') {
-      this.changes = await this.$api('info', 'changes');
-    }
+    this.changes = await this.$api('info', 'changes');
   }
 }
 </script>

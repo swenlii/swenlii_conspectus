@@ -1,38 +1,38 @@
 const {query} = require("./db-connect");
 let nodemailer = require('nodemailer');
+const constants = require("../CONSTANTS.js");
 
 async function index() {
   let ret = await query('SELECT * FROM guides');
   for(let i = 0; i < ret.length; i++) {
-    ret[i].arts = await query('SELECT * FROM articles_for_guides WHERE guide_id = ?', [ret[i].guide_id]);
+    ret[i].arts = await query('SELECT * FROM articles_for_guides WHERE guide_id = $1', [ret[i].guide_id]);
   }
   return ret;
 }
 
 async function get({id}) {
-  let ret = await query('SELECT * FROM guides where guide_id = ?', [id]);
+  let ret = await query('SELECT * FROM guides where guide_id = $1', [id]);
   if (ret.length === 0) return null;
-  ret[0].arts = await query('SELECT * FROM articles_for_guides WHERE guide_id = ?', [id]);
+  ret[0].arts = await query('SELECT * FROM articles_for_guides WHERE guide_id = $1', [id]);
   return ret[0];
 }
 
 async function add({guideId, guideTitle, guideDesc, guideInfo, guideType, guideKey, guideArts}){
-  console.log("add guide");
-  let guide = await query(`INSERT INTO guides (guide_id, \`title\`, \`type\`, \`desc\`, \`info\`, \`keywords\`) VALUES (?, ?, ?, ?, ?, ?)`, [
+  let guide = await query(`INSERT INTO guides (guide_id, title, type, description, info, keywords) VALUES ($1, $2, $3, $4, $5, $6)`, [
     guideId, guideTitle, guideType, guideDesc, guideInfo, guideKey ]);
 
   for (let i = 0; i < guideArts.length; i++) {
-    let art = await query(`INSERT INTO articles_for_guides (guide_id, \`title\`, \`desc\`, art_id, step) VALUES (?, ?, ?, ?, ?)`, [
-      guideId, guideArts[i].titleForGuide, guideArts[i].descForGuide, guideArts[i].id, guideArts[i].step ]);
+    let art = await query(`INSERT INTO articles_for_guides (guide_id, title, description, art_id, step) VALUES ($1, $2, $3, $4, $5)`, [
+      guideId, guideArts[i].titleForGuide, guideArts[i].descForGuide, guideArts[i].art_id, guideArts[i].step ]);
   };
 
   let transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
+    host: constants.mail_host,
+    port: constants.mail_port,
     secure: true,
     auth: {
-      user: 'swenliw@gmail.com',
-      pass: 'ldwjgybfawvccirg'
+      user: constants.mail_user,
+      pass: constants.mail_pass
     }
   });
 
@@ -40,8 +40,8 @@ async function add({guideId, guideTitle, guideDesc, guideInfo, guideType, guideK
   for(let i = 0; i < mails.length; i++) {
     try {
       await transporter.sendMail({
-        from: 'swenliw@gmail.com',
-        sender: 'swenliw@gmail.com',
+        from: constants.mail_user,
+        sender: constants.mail_user,
         to: mails[i].email,
         subject: guideTitle,
         html: require('../static/mail.js').mail("Новое руководство!", "<p>На сайте Conspectus новое руководство!</p> <h4 style=\"font-family: 'Oswald', 'Impact', 'Arial Black', sans-serif; font-size: 1.5em; font-weight: 700; letter-spacing: 0.02em;\">" + guideTitle + "</h4> <p>" + guideDesc + "</p> <p>В руководстве уже " + guideArts.length + " статьи</p>"),
@@ -56,20 +56,21 @@ async function add({guideId, guideTitle, guideDesc, guideInfo, guideType, guideK
 
 async function edit({guideId, guideTitle, guideDesc, guideInfo, guideType, guideKey, guideArts, delArts}){
 
-  let guide = await query("UPDATE guides SET `title` = ?, `type` = ?, `desc` = ?, `info` = ?, `keywords` = ? WHERE `guide_id` = ?", [
+  let guide = await query("UPDATE guides SET title=$1, type=$2, description=$3, info=$4, keywords=$5 WHERE guide_id=$6", [
     guideTitle, guideType, guideDesc, guideInfo, guideKey, guideId ]);
 
   for (let i = 0; i < guideArts.length; i++) {
-    let arts = await query(`SELECT * FROM articles_for_guides WHERE guide_id = ? && art_id = ?`, [guideId, guideArts[i].id]);
+    console.log(guideId + ' ' + guideArts[i].id);
+    let arts = await query(`SELECT * FROM articles_for_guides WHERE guide_id=$1 AND art_id=$2`, [guideId, guideArts[i].id]);
     if (arts.length === 0) {
-      let art = await query(`INSERT INTO articles_for_guides (guide_id, \`title\`, \`desc\`, art_id, step) VALUES (?, ?, ?, ?, ?)`, [
-      guideId, guideArts[i].titleForGuide, guideArts[i].descForGuide, guideArts[i].id, guideArts[i].step ]);
+      let art = await query(`INSERT INTO articles_for_guides (guide_id, title, description, art_id, step) VALUES ($1, $2, $3, $4, $5)`, [
+      guideId, guideArts[i].titleForGuide, guideArts[i].descForGuide, guideArts[i].art_id, guideArts[i].step ]);
     }
   };
 
   if (delArts !== null && delArts.length > 0) {
     for (let i = 0; i < delArts.length; i++) {
-      let res = await query(`DELETE FROM articles_for_guides WHERE id = ?`, [delArts[i]])
+      let res = await query(`DELETE FROM articles_for_guides WHERE id=$1`, [delArts[i]])
     }
   }
   

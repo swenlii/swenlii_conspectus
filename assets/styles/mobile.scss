@@ -1,99 +1,115 @@
-@import '~assets/styles/variables.scss';
+@import './variables.scss';
 
 @media screen and (max-width: 1400px){
   .home-page h2 {
-    font-size: 2em;
+    font-size: 2em !important;
   }
 }
 
 .mobile-menu {
-  display: none;
-  padding: 20px;
-  justify-content: center;
+  display: none !important;
+  padding: 20px !important;
+  justify-content: center !important;
   button {
-    margin: 0 20px;
-    border: none;
-    color: $black;
-    border-bottom: 1px solid $black;
-    background-color: transparent;
+    margin: 0 20px !important;
+    border: none !important;
+    color: $black !important;
+    border-bottom: 1px solid $black !important;
+    background-color: transparent !important;
     &:hover {
-      border: 1px solid $black;
+      border: 1px solid $black !important;
     }
+  }
+}
+
+.dark .mobile-menu button{
+  color: #e4e4e4 !important;
+  border-bottom: 1px solid #e4e4e4 !important;
+  &:hover {
+    border: 1px solid #e4e4e4 !important;
   }
 }
 
 @media screen and (max-width: 1100px){
   #search-block.close {
-    margin-top: -1.6em;
+    margin-top: -1.6em !important;
   }
 
   // в статье не отображается aside. Только в полноэкранном режиме
   .open-aside {
     position: fixed !important;
-    height: 100vh;
-    top: 0;
-    right: 0;
+    height: 100vh !important;
+    top: 0 !important;
+    right: 0 !important;
     width: calc(100% - 80px) !important;
   }
 
   h1:before {
-    display: none;
+    display: none !important;
+  }
+
+  .article-page .under-cont .comments {
+    margin: 0 !important;
   }
 
   // сверху всегда отображается поиск (sticky) с вызовом aside
   // кнопка вызова сверху страницы (где поиск)
 
   .content-header div:nth-child(2) {
-    height: 10em;
-    width: 10em;
+    height: 10em !important;
+    width: 10em !important;
   }
 
   .articles .one-article {
-    width: 100%;
-    display: block;
+    width: 100% !important;
+    display: block !important;
 
     .photo {
-      float: right;
+      float: right !important;
     }
   }
 
   .about {
-    display: block;
+    display: block !important;
     .contacts {
-      max-width: 100%;
+      max-width: 100% !important;
     }
   }
 
+  .article-page .under-cont {
+    padding: 3em !important;
+  }
+
   .help-page {
-    padding: 0;
+    padding: 0 !important;
   }
   .conspectus {
     font-size: 4em !important;
   }
   #search-block {
-    height: 2em;
+    height: 2em !important;
   }
 
-  main.home {
-    padding: 0 1em;
+  .home-page {
+    padding: 0 1em !important;
   }
   .home-page .main-section {
-    padding: 1em 2em 3em 2em;
+    padding: 1em 2em 3em 2em !important;
   }
 
   .guide-page > ol > li:before {
-    font-size: 2em;
+    font-size: 2em !important;
   }
 
   .article-page .under-cont {
-    padding: 0;
+    padding: 0 !important;
     .comments {
-      margin: 20px;
-      max-width: 100%;
+      margin: 20px !important;
+      max-width: 100% !important;
     }
     .sim-arts {
-      margin: 20px;
-      max-width: 100%;
+      margin: 20px !important;
+      max-width: 100% !important;
     }
   }
 }
@@ -105,44 +121,48 @@
   }
 
   .content-header div:nth-child(2) {
-    display: none;
+    display: none !important;
   }
 
   .articles .one-article {
-    width: 100%;
-    display: block;
+    width: 100% !important;
+    display: block !important;
 
     .photo {
-      float: none;
-      width: 100%;
-      margin-left: 0;
+      float: none !important;
+      width: 100% !important;
+      margin-left: 0 !important;
       img {
-        max-width: 100%;
+        max-width: 100% !important;
       }
     }
   }
 
   .guide-page > .content-header > div:nth-child(2) {
-    width: 3em;
-    height: 3em;
-    font-size: 2em;
-    box-shadow: 8px 8px $black;
-    min-width: 150px;
+    width: 3em !important;
+    height: 3em !important;
+    font-size: 2em !important;
+    box-shadow: 8px 8px $black !important;
+    min-width: 150px !important;
     &:hover {
-      box-shadow: -8px -8px $black;
+      box-shadow: -8px -8px $black !important;
     }
   }
 
+  .article-page .under-cont {
+    padding: 2em !important;
+  }
+
   .guide-page ol > li {
-    flex-direction: column;
+    flex-direction: column !important;
   }
 
   .guide-page > ol > li:before {
-    padding: 0;
+    padding: 0 !important;
   }
 
   .articles .arts-header {
-    display: block;
+    display: block !important;
   }
 
 }
@@ -150,99 +170,241 @@
 @media screen and (max-width: 800px){
   // уменьшаем паддинги
   .article-page article h1 {
-    margin: 40px 20px 10px 20px;
-    font-size: 3em;
+    margin: 0px 20px 10px 20px !important;
+    font-size: 3em !important;
+  }
+
+  .articles .sort-block .filters-1 > div {
+    margin: 0.3em 0.3em !important;
+  }
+
+  .article-page article {
+    max-width: 100% !important;
   }
 
   .article-page article section {
-    padding: 20px;
+    padding: 20px !important;
   }
 
   .content-header {
-    padding: 20px 0;
-    margin: 0 20px;
+    padding: 20px 0 !important;
+    margin: 0 20px !important;
   }
 
   .guides-content {
-    padding: 0.6em 20px;
+    padding: 0.6em 20px !important;
     > div {
       margin: 1em 0 !important;
     }
   }
 
+  .article-page .under-cont {
+    padding: 1em !important;
+  }
+
+  .article-page article .about-art {
+    margin: 0 0 0.5em 0 !important;
+    padding: 0.3em 0 0.3em 0 !important;
+    font-size: 1em !important;
+  }
+
   .guide-page ol {
-    padding: 20px;
+    padding: 20px !important;
   }
 
   .articles .content {
-    padding: 1em 20px;
+    padding: 1em 20px !important;
+  }
+  .articles .all-content {
+    display: flex;
+    flex-direction: column-reverse;
   }
   .articles .sort-block {
-    margin: 1em 0;
+    margin: 1em 0 !important;
   }
   .articles .one-article {
-    box-shadow: none;
-    margin: 1em 0;
+    box-shadow: none !important;
+    margin: 1em 0 !important;
+  }
+
+  .article-page .aside-art .tabs-menu label {
+    min-width: 20px !important;
+    padding: 0 0.3em !important;
   }
 
   .library-content {
-    padding: 1em 20px;
+    padding: 1em 20px !important;
   }
 
   .about .main-section {
-    padding: 1.5em 20px;
+    padding: 1.5em 20px !important;
   }
 
   .help-page > div {
-    padding: 1em 20px;
+    padding: 1em 20px !important;
   }
 
   .help-page ol > li:before {
-    padding: 0;
+    padding: 0 !important;
   }
 
   .help-page details form input, .help-page details form textarea {
-    margin: 0.5em;
+    margin: 0.5em !important;
   }
 }
 
 @media screen and (max-width: 700px){
+
   .mobile-menu {
-    display: flex;
+    display: flex !important;
+    padding: 5px !important;
   }
+
+  .home-page {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .about-site {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
   .open-aside {
     width: 100% !important;
   }
-  #little-menu {
+
+  .conspectus.close {
+    display: none !important;
+  }
+
+  .about .contacts {
+    background-color: $white2 !important;
+    color: $black !important;
+    padding: 0 !important;
+  }
+
+  .dark .about .contacts {
+    background-color: #171616 !important;
+    color: #e4e4e4 !important;
+  }
+
+  .about .contacts form {
+    padding: 10px 20px !important;
+    box-shadow: none !important;
+  }
+
+  .about .contacts .links {
+    padding: 1em !important;
+    background-color: $white2 !important;
+    color: $black !important;
+    font-size: 1.1em !important;
+  }
+
+  .about .contacts b {
+    display: inline-block !important;
+    margin: 1em 0 !important;
+  }
+
+  .about .contacts a {
+    padding: 1em 0 !important;
+  }
+
+  .guides-content summary a:nth-child(2) {
     display: none;
   }
+
+  #search-block.close {
+    display: none !important;
+  }
+
+  header {
+    width: auto !important;
+  }
+
+  #big-menu {
+    width: 100vw !important;
+    transition: none !important;
+    &.hide-menu {
+      margin-left: -100vw !important;
+    }
+  }
+
+  #little-menu {
+    display: none !important;
+  }
+
+  .home-page details summary {
+    padding: 0.4em 1em !important;
+  }
+
   .about .contacts {
-    min-width: 300px;
+    min-width: 300px !important;
   }
   .article-page .under-cont .comments,
   .article-page .under-cont .sim-arts {
-    min-width: 300px;
+    min-width: 300px !important; 
   }
 
   .guides-content {
-    display: block;
+    display: block !important;
   }
 
   .guides-content .front-end,
   .guides-content .back-end {
-    min-width: 200px;
+    min-width: 200px !important;
   }
 
   .about .contacts h3 {
-    font-size: 1em;
+    font-size: 1em !important;
   }
   h1 {
-    font-size: 3em;
+    font-size: 2.4em !important;
+    margin: 0.2em 0 !important;
+    padding: 0 !important;
+    transition: none !important;
+    animation: none !important;
+  }
+  h2 {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 1.8em !important;
+    transition: none !important;
+    animation: none !important;
+  }
+  p {
+    margin: 0.3em 0 !important;
   }
   .conspectus {
     font-size: 3em !important;
   }
   .home-page .main-section {
-    padding: 1em 10px 3em 10px;
+    padding: 1em 10px 2em 10px !important;
+  }
+  .changes .cont {
+    padding: 0 20px !important;
+  }
+
+  .guides-content .front-end {
+    padding: 20px !important;
+  }
+  .guide-page > .content-header > div:nth-child(2) {
+    font-size: 1em !important;
+  }
+
+  .articles-list, 
+  .guides-content, 
+  .library-content, 
+  .about .main-section, 
+  .about .main-section p, 
+  .about .main-section h2, 
+  .about .contacts {
+    animation: none !important;
+  }
+}
+
+@media screen and (max-width: 550px){
+  .filters-1 {
+    justify-content: center;
   }
 }

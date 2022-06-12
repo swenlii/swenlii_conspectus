@@ -1,6 +1,6 @@
 const {query} = require("./db-connect");
-const mysql = require('mysql2/promise');
-let nodemailer = require('nodemailer');
+let {createTransport} = require('nodemailer');
+const constants = require("../CONSTANTS.js");
 
 async function categories() {
   return await query('SELECT * FROM categories');
@@ -11,37 +11,37 @@ async function library() {
 }
 
 async function comment ({user, text, art_id}) {
-  await query (`UPDATE articles SET popularity = popularity + 1 WHERE art_id = ?`, [art_id]);
-  await query(`INSERT INTO comments (user, text, art_id) VALUES (?, ?, ?)`, [user, text, art_id]);
+  await query (`UPDATE articles SET popularity = popularity + 1 WHERE art_id = $1`, [art_id]);
+  await query(`INSERT INTO comments (user, text, art_id) VALUES ($1, $2, $3)`, [user, text, art_id]);
 }
 
 async function subscribe ({email}) {
-  await query(`INSERT INTO emails (email) VALUES (?)`, [email]);
+  await query(`INSERT INTO emails (email) VALUES ($1)`, [email]);
 }
 
 async function changes () {
-  return await query(`SELECT *, DATE_FORMAT(date, '%d.%m.%Y') AS date2 FROM changes ORDER BY date DESC`);
+  return await query(`SELECT *, TO_CHAR(date, 'DD Mon YYYY') AS date2 FROM changes ORDER BY date DESC`);
 }
 
 async function randomArt () {
-  return await query(`SELECT * FROM articles ORDER BY RAND() LIMIT 1`);
+  return await query(`SELECT * FROM articles ORDER BY RANDOM() limit 1;`);
 }
 
 async function sendMail ({name, email, title, mail, page}) {
-  let transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
+  let transporter = createTransport({
+    host: constants.mail_host,
+    port: constants.mail_port,
     secure: true,
     auth: {
-      user: 'swenliw@gmail.com',
-      pass: 'ldwjgybfawvccirg'
+      user: constants.mail_user,
+      pass: constants.mail_pass
     }
   });
   try {
     await transporter.sendMail({
-      from: 'swenliw@gmail.com',
+      from: constants.mail_user,
       sender: email,
-      to: 'swenliw@gmail.com',
+      to: constants.mail_user,
       subject: title,
       html: require('../static/mail.js').mail("Новое письмо для тебя!", "<p>*Письмо направилено со страницы '" + page + "' в conspectus</p><h1 style='font-family: 'Oswald', 'Impact', 'Arial Black', sans-serif; font-size: 2em; font-weight: 700; letter-spacing: 0.02em;'>" + title + "</h1><p><h3 style='font-family: 'Oswald', 'Impact', 'Arial Black', sans-serif; font-size: 1.5em; font-weight: 700; letter-spacing: 0.02em;'>Name sender:</h3>" + name + "</p><p><h3 font-family: 'Oswald', 'Impact', 'Arial Black', sans-serif; font-size: 1.5em; font-weight: 700; letter-spacing: 0.02em;>Email for answer:</h3>" + email + "</p><p><h3 font-family: 'Oswald', 'Impact', 'Arial Black', sans-serif; font-size: 1.5em; font-weight: 700; letter-spacing: 0.02em;>Text:</h3><pre>" + mail + "</pre></p>"),
     });
@@ -52,31 +52,31 @@ async function sendMail ({name, email, title, mail, page}) {
 }
 
 async function adminLogin ({name, password}) {
+  let adm = await query(`SELECT * FROM users WHERE id = 1`)
   if (process.env.NODE_ENV === 'development') return 'ok';
    else console.log('not dev');
-  if (name === "Hankie5043" && password === "hy2HEe3Br2")
+  if (name === adm[0].login && password === adm[0].password)
     return "ok"
   else return "error"
 }
 
 async function addcat({catLink, catName}) {
-  let art = await query(`INSERT INTO categories (link, text) VALUES (?, ?)`, [
+  let art = await query(`INSERT INTO categories (link, text) VALUES ($1, $2)`, [
     catLink, catName ]);
   return 'ok'
 }
 
 async function addchanges({changesName, changesText}) {
- console.log('changes add' + changesName + changesText);
-  let art = await query(`INSERT INTO changes (title, html) VALUES (?, ?)`, [
+  let art = await query(`INSERT INTO changes (title, html) VALUES ($1, $2)`, [
     changesName, changesText ]);
 
-  let transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
+  let transporter = createTransport({
+    host: constants.mail_host,
+    port: constants.mail_port,
     secure: true,
     auth: {
-      user: 'swenliw@gmail.com',
-      pass: 'ldwjgybfawvccirg'
+      user: constants.mail_user,
+      pass: constants.mail_pass
     }
   });
 
@@ -84,8 +84,8 @@ async function addchanges({changesName, changesText}) {
   for(let i = 0; i < mails.length; i++) {
     try {
       await transporter.sendMail({
-        from: 'swenliw@gmail.com',
-        sender: 'swenliw@gmail.com',
+        from: constants.mail_user,
+        sender: constants.mail_user,
         to: mails[i].email,
         subject: changesName,
         html: require('../static/mail.js').mail("Обновление сайта!", "<p>На сайте Conspectus новые изменения!</p> <h4 style=\"font-family: 'Oswald', 'Impact', 'Arial Black', sans-serif; font-size: 1.5em; font-weight: 700; letter-spacing: 0.02em;\">" + changesName + "</h4> <p>Что изменилось:</p>" + changesText),
@@ -99,28 +99,17 @@ async function addchanges({changesName, changesText}) {
 }
 
 async function checkconection () {
-  console.log('check conection');
   try {
-    const mysql = require('mysql2/promise');
-
-    const connection = await mysql.createConnection({
-      host: "127.0.0.1",
-      user: "swenlii",
-      database: "conspectus",
-      password: "O?umAOwbCG{H"
+    const { Client } = require('pg');
+    const client = new Client({
+      user: constants.db_user,
+      host: constants.db_host,
+      database: constants.db_name,
+      password: constants.db_pass,
+      port: constants.db_port,
     });
-
-    connection.connect((err) => {
-      if(err){
-        console.log('ERROR when connection to database');
-        return(err.message);
-      }
-      console.log('I am here');
-    });
-
-    connection.end();
-
-    console.log('error not found');
+    await client.connect();
+    await client.end();
     return 'ok'
 
   } catch (err) {

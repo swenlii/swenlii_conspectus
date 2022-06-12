@@ -5,11 +5,12 @@
         <h1 :first-word="this.search ? 'Поиск по запросу «' + this.search + '»' : this.category ? this.category : 'Все статьи'">{{ this.search ? 'Поиск по запросу «' + this.search + '»' : this.category ? this.category : 'Все статьи' }}</h1>
         <span>Найдено {{ artLength }} статей</span>
       </div>
-      <div class="sort-block">
+      <div class="all-content">
+        <div class="sort-block">
         <div class="filters-1">
           <div class="search-arts">
             <input type="text" ref="input" placeholder="Поиск" @keydown="(event) => { if (event.key === 'Enter') searchClick() }" id="search-inp" :value="this.search">
-            <a @click="searchClick()"><img src="/images/icons/find.png" alt="search"></a>
+            <span class="link" @click="searchClick()"><img src="/images/icons/find.webp" alt="search"></span>
           </div>
           <div class="select-box">
             <button id="select-button" v-on:click="sortOpen === 1 ? sortOpen = 0 : sortOpen = 1" :style="this.sortOpen === 1 ? 'border-bottom: none' : ''">{{ this.sorting[this.sort] ? this.sorting[this.sort] : 'Сортировка' }}</button>
@@ -60,7 +61,7 @@
 
       </div>
       <div class="empty" v-if="this.selArts.length === 0">
-        <img src="/images/empty.png" alt="не найдено">
+        <img src="/images/empty.webp" alt="не найдено">
         <h2>Ничего не найдено.</h2>
         <p>Возможно вам стоит изменить запрос. Если вы уверены, что это должно работать, свяжитесь с разработчиком на странице
           <router-link to="/about">"О нас"</router-link>
@@ -69,10 +70,10 @@
       <div class="articles-list" v-if="this.selArts.length > 0">
         <div :class="(art.description && art.description.length < 220) || !art.img ? 'one-article' : 'one-article full'" v-for="(art, ind) in this.selArts" :key="'art' + ind">
           <div class="photo" v-if="art.img">
-            <img :src="'/images/' + art.img" alt="">
+            <img :src="'/images/articles/' + art.img" alt="">
           </div>
           <div>
-            <h4 v-html="art.title"></h4>
+            <h2 v-html="art.title"></h2>
             <div v-if="(pagePath && pagePath === 'tags') || showTags" style="margin: 1em 0 0.3em 0">
               <span class="tag" v-for="tag in art.tags" :key="'arttag' + tag">{{tag}}</span>
             </div>
@@ -84,6 +85,8 @@
           <button  v-if="artCount >= 15 && artCount <= artLength" @click="learnMore()">Загрузить больше</button>
         </div>
       </div>
+      </div>
+      
     </div>
   </div>
 </template>
@@ -135,13 +138,12 @@ export default {
         {
           hid: 'keywords',
           name: 'keywords',
-          content: 'блог, статьи, разработка, обучение, программирование'
+          content: 'блог, статьи, разработка, обучение, программирование' + this.category ? ', ' + this.category : ''
         }
       ],
     };
   },
   async fetch() {
-
     this.pagePath = this.$route.path.slice(1);
     if (this.$route.query.search)
       this.search = this.$route.query.search;
@@ -154,10 +156,7 @@ export default {
     if (this.$route.query.inside)
       this.searchInside = true;
     try {
-      let con = await this.$api('info','checkconection');
-      if (con === 'ok') {
-        this.articles = await this.$api("articles", "index");
-      }
+      this.articles = await this.$api("articles", "index");
     } catch (e) {
       console.error("articles.vue: " + e);
     }
@@ -397,19 +396,21 @@ export default {
 
   .sort-block {
     margin: 2em 1em;
-    padding: 0 1em 0.8em 1em;
+    padding: 0.5em 1em 0.8em 1em;
     background-color: $black;
     color: $white1;
-    animation: 2s to-page;
+    animation: 1s to-page;
 
     .filters-1 {
       display: flex;
       align-items: center;
       flex-wrap: wrap;
+      & > div {
+        margin: 0.7em 0.7em;
+      }
     }
 
     .filters-2 {
-      margin-top: 1em;
       display: flex;
       align-items: center;
       flex-wrap: wrap;
@@ -418,11 +419,11 @@ export default {
         width: 0;
         height: 0;
         position: absolute;
-        visibility: hidden;
+        opacity: 0;
         &:checked + label {
           color: $black;
           &:before {
-            visibility: visible;
+            opacity: 1;
             width: 96%;
           }
         }
@@ -445,7 +446,7 @@ export default {
           width: 0;
           background-color: $white1;
           border: 2px solid $black;
-          visibility: hidden;
+          display: none;
           box-shadow: 1px 1px $white1, -1px -1px $white1, -1px 1px $white1, 1px -1px $white1;
           top: 0;
           left: 0;
@@ -456,7 +457,6 @@ export default {
 
     .checkbox {
       margin-top: 0.8em;
-      margin-right: 1em;
     }
 
     .search-arts {
@@ -467,12 +467,11 @@ export default {
         outline: none;
         border: 1px solid $white1;
         width: 200px;
-        margin-right: 1em;
         padding: 0.5em 0.5em;
         @extend .font-style-3;
         color: $white1;
       }
-      a {
+      .link {
         position: absolute;
         top: 10px;
         right: 1.3em;
@@ -486,7 +485,6 @@ export default {
 
     .select-box {
       position: relative;
-      margin-right: 1em;
       margin-top: 0.8em;
       z-index: 3;
 
@@ -512,12 +510,12 @@ export default {
         width: 100%;
         border: 1px solid $white1;
         border-top: none;
-        animation: 2s option-show;
+        animation: 1s option-show;
         overflow: hidden;
         z-index: 5;
 
         input {
-          visibility: hidden;
+          display: none;
           position: absolute;
 
           &:checked + label:before {
@@ -566,8 +564,11 @@ export default {
       min-width: 90%;
     }
 
-    h4 {
+    h2 {
+      @extend .font-style-4;
       margin: 0;
+      font-weight: 700;
+      font-size: 1.8rem;
     }
 
     p {
@@ -633,7 +634,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     position: relative;
-    animation: 2s to-top;
+    animation: 0.6s to-top;
     justify-content: stretch;
   }
 }

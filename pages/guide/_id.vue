@@ -12,14 +12,14 @@
       <li v-for="art in guide.arts" :key="'g-art-' + art.id">
         <router-link :to="'/article/' + art.art_id" @click.native="clickLink(art.art_id)">
           <h2>{{ art.title }}</h2>
-          <p>{{ art.desc }}</p>
+          <p>{{ art.description }}</p>
         </router-link>
       </li>
     </ol>
   </div>
   <div v-else>
     <div class="empty">
-      <img src="/images/error.png" alt="не найдено">
+      <img src="/images/error.webp" alt="не найдено">
       <h2>Руководство не найдено.</h2>
       <p>Возможно запрос устарел или вам стоит изменить запрос. Если вы уверены, что это должно работать, свяжитесь с разработчиком на странице
         <router-link to="/about">"О нас"</router-link>
@@ -118,13 +118,10 @@ export default {
     }
   },
   async fetch() {
-    let con = await this.$api('info','checkconection');
-    if (con === 'ok') {
-      if (this.$route.fullPath === '/guide-template') {
-        this.guide = await this.$api('guides', 'get', {id: 'template'});
-      } else {
-        this.guide = await this.$api('guides', 'get', {id: this.$route.params.id});
-      }
+    if (this.$route.fullPath === '/guide-template') {
+      this.guide = await this.$api('guides', 'get', {id: 'template'});
+    } else {
+      this.guide = await this.$api('guides', 'get', {id: this.$route.params.id});
     }
   },
 }

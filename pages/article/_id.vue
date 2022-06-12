@@ -5,7 +5,7 @@
         <h1 :first-word="article.title ? article.title.slice(0, 10) : ''">{{ article.title }}</h1>
         <section>
           <div class="photo" v-if="article.img">
-            <img :src="'/images/' + article.img" alt="">
+            <img :src="'/images/articles/' + article.img" alt="">
           </div>
           <p v-if="article.description && article.description.length > 0" class="about-art">{{ article.description }}</p>
           <p class="path-to-art">{{ article.date2 }} / <span v-for="(cat, ind) in this.article.cats" :key="'category-' + cat + article.art_id"><NuxtLink :to="'/articles?category=' + cat">{{ categories[cat] }}</NuxtLink><span v-if="ind !== article.cats.length-1"> - </span></span></p>
@@ -21,7 +21,7 @@
               :description="article.description"
               :hashtags="article.keywords"
             >
-              <img src="/images/icons/facebook_nb.png" alt="facebook">
+              <img src="/images/icons/facebook_nb.webp" alt="facebook">
             </ShareNetwork>
             <ShareNetwork
               network="twitter"
@@ -30,7 +30,7 @@
               :description="article.description"
               :hashtags="article.keywords"
             >
-              <img src="/images/icons/twitter_nb.png" alt="twitter">
+              <img src="/images/icons/twitter_nb.webp" alt="twitter">
             </ShareNetwork>
             <ShareNetwork
               network="vk"
@@ -40,7 +40,7 @@
               :hashtags="article.keywords"
               :media="article.img ? ('https://localhost:3000/images/' + article.img) : ''"
             >
-              <img src="/images/icons/vk_nb.png" alt="vk">
+              <img src="/images/icons/vk_nb.webp" alt="vk">
             </ShareNetwork>
             <ShareNetwork
               network="email"
@@ -49,7 +49,7 @@
               :description="article.description"
               :hashtags="article.keywords"
             >
-              <img src="/images/icons/email-nb.png" alt="email">
+              <img src="/images/icons/email-nb.webp" alt="email">
             </ShareNetwork>
             <ShareNetwork
               network="pocket"
@@ -58,7 +58,7 @@
               :description="article.description"
               :hashtags="article.keywords"
             >
-              <img src="/images/icons/pocket_nb.png" alt="pocket">
+              <img src="/images/icons/pocket_nb.webp" alt="pocket">
             </ShareNetwork>
             <ShareNetwork
               network="odnoklassniki"
@@ -67,7 +67,7 @@
               :description="article.description"
               :hashtags="article.keywords"
             >
-              <img src="/images/icons/odnoklassniki.png" alt="odnoklassniki">
+              <img src="/images/icons/odnoklassniki.webp" alt="odnoklassniki">
             </ShareNetwork>
             <ShareNetwork
               network="skype"
@@ -76,7 +76,7 @@
               :description="article.description"
               :hashtags="article.keywords"
             >
-              <img src="/images/icons/skype_nb.png" alt="skype">
+              <img src="/images/icons/skype_nb.webp" alt="skype">
             </ShareNetwork>
             <ShareNetwork
               network="telegram"
@@ -85,7 +85,7 @@
               :description="article.description"
               :hashtags="article.keywords"
             >
-              <img src="/images/icons/telegram_nb.png" alt="telegram">
+              <img src="/images/icons/telegram_nb.webp" alt="telegram">
             </ShareNetwork>
             <ShareNetwork
               network="whatsapp"
@@ -94,12 +94,12 @@
               :description="article.description"
               :hashtags="article.keywords"
             >
-              <img src="/images/icons/whatsapp.png" alt="whatsapp">
+              <img src="/images/icons/whatsapp.webp" alt="whatsapp">
             </ShareNetwork>
           </div>
         </section>
       </article>
-      <section class="aside-art" v-if="article.dopcon && article.dopconarr" :class="showAside === 1 ? 'open-aside' : ''" :style="this.width < 700 ? 'display: none' : ''">
+      <section class="aside-art" v-if="article.dopcon && article.dopconarr" :class="showAside === 1 ? 'open-aside' : ''" :style="this.width < 700 && showAside === 0 ? 'display: none' : ''">
         <input :id="'tab-name' + (ind + 1)" type="radio" name="tab-name" v-for="(aside, ind) in this.article.dopconarr" :key="'tab-name' + (ind + 1)" :placeholder="aside.name" :checked="ind === 0">
 
         <div class="tabs-menu">
@@ -175,13 +175,13 @@
           </div>
         </div>
       </div>
-      <div class="sim-arts" v-if="article.sim_arts.length > 0">
-        <h3>Почитайте еще это</h3>
+      <div class="sim-arts" v-if="article.sim_arts && article.sim_arts.length > 0">
+        <h3>Похожие статьи</h3>
         <div class="one-sim-arts" v-for="(art, ind) in article.sim_arts" :key="'sim-art-'+ind">
           <div v-if="art">
             <h4>{{ art.title}}</h4>
-          <p>{{ art.desc}}</p>
-          <div><router-link :to="'/article/' + art.art_id">Почитать</router-link></div>
+          <p>{{ art.description}}</p>
+          <div><router-link :to="'/article/' + art.art_id">Читать</router-link></div>
           </div>
         </div>
       </div>
@@ -189,7 +189,7 @@
   </div>
   <div v-else>
     <div class="empty">
-      <img src="/images/error.png" alt="не найдено">
+      <img src="/images/error.webp" alt="не найдено">
       <h2>Статья не найдена.</h2>
       <p>Возможно запрос устарел или вам стоит изменить запрос. Если вы уверены, что это должно работать, свяжитесь с разработчиком на странице
         <router-link to="/about">"О нас"</router-link>
@@ -199,8 +199,6 @@
 </template>
 
 <script>
-import hljs from "highlight.js";
-import 'highlight.js/styles/github.css';
 export default {
   name: "Article",
   data: function () {
@@ -236,7 +234,7 @@ export default {
           { hid: 'og:title', name: 'og:title', content: this.article.title},
           { hid: 'og:type', name: 'og:title', content: 'article'},
           { hid: 'og:description', name: 'og:description', content: this.article.description}
-        ],
+        ]
       };
     else
       return {
@@ -398,29 +396,26 @@ export default {
     }
   },
   async fetch () {
-    let con = await this.$api('info','checkconection');
-    if (con === 'ok') {
-      if (this.$route.fullPath.includes('/article-template')) {
-        this.article = await this.$api('articles', 'get', { id: 'template'});
-        this.comms = await this.$api('articles', 'comments', { id: 'template' });
-      } else {
-        this.article = await this.$api('articles', 'get', { id: this.$route.params.id});
-        this.comms = await this.$api('articles', 'comments', { id: this.$route.params.id });
-      }
-      this.article.cats = this.article.categories.split(',');
-      this.article.tags = this.article.tags && this.article.tags.length > 0 ? this.article.tags.split(',') : [];
-      if (this.article.sim_arts)
-      this.article.sim_arts = await this.$api('articles', 'sim_arts', {ids: this.article.sim_arts});
-  
-      this.article.content = (require('../../static/articles/' + this.article.file)).code;
-  
-      this.$nextTick(() => {
-        if (process.client) {
-          this.createTooltips();
-          hljs.highlightAll();
-        }
-      });
+    if (this.$route.fullPath.includes('/article-template')) {
+      this.article = await this.$api('articles', 'get', { id: 'template'});
+      this.comms = await this.$api('articles', 'comments', { id: 'template' });
+    } else {
+      this.article = await this.$api('articles', 'get', { id: this.$route.params.id});
+      this.comms = await this.$api('articles', 'comments', { id: this.$route.params.id });
     }
+    this.article.cats = this.article.categories.split(',');
+    this.article.tags = this.article.tags && this.article.tags.length > 0 ? this.article.tags.split(',') : [];
+    if (this.article.sim_arts)
+    this.article.sim_arts = await this.$api('articles', 'sim_arts', {ids: this.article.sim_arts});
+  
+    this.article.content = (require('../../static/articles/' + this.article.file)).code;
+  
+    // this.$nextTick(() => {
+    //   if (process.client) {
+    //     this.createTooltips();
+    //     hljs.highlightAll();
+    //   }
+    // });
 
   },
   async mounted() {
@@ -516,16 +511,25 @@ export default {
     position: relative;
   }
 
+  pre {
+    margin: 1em;
+    border: 1px solid $black2;
+  }
+
   code {
     background-color: $white3;
     color: #444;
     margin: 0;
     font-family: monospace;
-    font-size: 0.7em;
     display: inline-block;
     border: none;
     padding: 0.1em 0.3em;
     font-weight: 400;
+  }
+
+  pre code {
+    width: 100%;
+    padding: 1em 1.3em;
   }
 
   article {
@@ -543,7 +547,7 @@ export default {
       max-width: 800px;
       padding: 50px;
       margin: 0 auto;
-      animation: 2s to-page;
+      animation: 1s to-page;
     }
 
     #art-content {
@@ -722,12 +726,6 @@ export default {
         color: $white1;
       }
 
-      pre {
-        border: 1px solid $black;
-        margin-top: 0;
-        font-size: 0.9em;
-      }
-
 
 
       table.table, .table th, .table td {
@@ -759,12 +757,12 @@ export default {
     .path-to-art {
       margin-bottom: 2em;
       margin-top: -0.5em;
-      color: #828282;
+      color: #575656;
       font-size: 0.8em;
       position: relative;
 
       a {
-        color: #828282;
+        color: #575656;
       }
     }
 
@@ -783,6 +781,7 @@ export default {
 
   .btn-group {
     display: flex;
+    flex-wrap: wrap;
     padding: 1em;
     justify-content: flex-end;
     a {
@@ -798,15 +797,17 @@ export default {
 
   .open-aside {
     width: 35%;
-    min-width: 450px;
+    min-width: 300px;
   }
 
   .aside-art {
     display: flex;
     flex-direction: row-reverse;
     max-height: 100vh;
+    position: -webkit-sticky;
     position: sticky;
-    top: 0;
+    top: -1px;
+    right: 0;
     z-index: 2;
 
     h2 {
@@ -911,7 +912,7 @@ export default {
   #tab-name5:checked ~ .tabs-menu label[for="tab-name5"] {
     background-color: transparent;
     color: $white1;
-    transition: 1.2s color ease;
+    transition: 1s color ease;
   }
 
   #tab-name1:checked ~ .tabs-menu label[for="tab-name1"]:hover,
@@ -972,7 +973,7 @@ export default {
     .comments {
       flex: 1;
       max-width: 600px;
-      min-width: 450px;
+      min-width: 300px;
       margin: 2rem 2rem 2rem 2rem;
       h3 {
         @extend .font-style-2;
@@ -1020,7 +1021,7 @@ export default {
       #loading {
         width: 30px;
         height: 30px;
-        background-image: url("/images/icons/time.png");
+        background-image: url("/images/icons/time.webp");
         background-size: contain;
         margin: 0.5em;
         display: none;
@@ -1055,7 +1056,7 @@ export default {
     .sim-arts {
       flex: 1;
       max-width: 600px;
-      min-width: 450px;
+      min-width: 300px;
       margin: 0 2rem 0 2rem;
 
       h3 {

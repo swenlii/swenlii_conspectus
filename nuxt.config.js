@@ -15,10 +15,10 @@ export default {
       { name: 'format-detection', content: 'telephone=no' },
       { hid: 'og:title', name: 'og:title', content: 'Conspectus - блог о веб-разработке'},
       { hid: 'og:locale', name: 'og:locale', content: 'ru_RU'},
-      { hid: 'og:description', name: 'og:description', content: 'Блог о программировании, конспектирующий многие учебники и курсы в один небольшой сайт, логично называемый "Conspectus".'}
+      { hid: 'og:description', name: 'og:description', content: 'Блог о программировании "Conspectus". Сборник конспектов одного разработчика.'}
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/icon.png' }
     ]
   },
 
@@ -33,8 +33,7 @@ export default {
         next();
       }
     },
-    { path: "/api", handler: "~/api/api-server.js" },
-    { path: "/upload", handler: require("body-parser").json() }
+    { path: "/api", handler: "~/api/api-server.js" }
   ],
 
   router: {
@@ -66,9 +65,9 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    '~assets/styles/variables.scss',
-    '~assets/styles/l_style.scss',
     '~assets/styles/mobile.scss',
+    '~assets/styles/l_style.scss',
+    '~assets/styles/variables.scss',
     '~assets/styles/d_style.scss'
   ],
 
@@ -83,13 +82,15 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    '@nuxtjs/style-resources'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
     'cookie-universal-nuxt',
-    'vue-social-sharing/nuxt'
+    'vue-social-sharing/nuxt',
+    '@nuxtjs/pwa'
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -101,6 +102,23 @@ export default {
       scss: {
         implementation: require('sass'),
       },
+    },
+  },
+
+  pwa: {
+    meta: {
+      title: 'Conspectus',
+      author: 'Swenlii',
+    },
+    manifest: {
+      name: 'Conspectus by swenlii',
+      short_name: 'Conspectus',
+      lang: 'ru',
+      start_url: "/articles",
+      background_color: "#dedede",
+      display: "minimal-ui",
+      theme_color: "#1f1f1f",
+      description: "Блог о программировании \"Conspectus\". Сборник конспектов одного разработчика."
     },
   }
 }

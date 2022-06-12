@@ -1,6 +1,7 @@
-const mysql = require('mysql2/promise');
+const constants = require("../CONSTANTS.js");
+const { Client } = require('pg')
 
-async function query (sql, params = []) {
+async function query_mysq (sql, params = []) {
   try {
     const connection = await mysql.createConnection({
     host: "127.0.0.1",
@@ -9,21 +10,32 @@ async function query (sql, params = []) {
     password: "O?umAOwbCG{H"
   });
 
-  connection.connect((err) => {
-    if(err){
-      console.log('ERROR when connection to database');
-    }
-    console.log('I am here');
-  });
-
-  console.log('error not found')
-
   let [ret] = await connection.query(sql, params);
 
   connection.end();
   return ret;
   } catch (err) {
-    console.error(err);
+    console.error('in db-connect: ' + err);
+    throw err;
+  }
+  
+}
+
+async function query (sql, params = []) {
+  try {
+    const client = new Client({
+      user: constants.db_user,
+      host: constants.db_host,
+      database: constants.db_name,
+      password: constants.db_pass,
+      port: constants.db_port,
+    });
+    await client.connect()
+    const res = await client.query(sql, params);
+    await client.end();
+    return res.rows;
+  } catch (err) {
+    console.error('in db-connect: ' + err);
     throw err;
   }
   

@@ -10,25 +10,24 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/pwa": "^3.3.5",
     "cookie-universal-nuxt": "^2.1.5",
     "core-js": "^3.15.1",
-    "highlight.js": "^11.2.0",
-    "net": "^1.0.2",
     "nodemailer": "^6.6.3",
     "nuxt": "^2.15.7",
+    "pg": "^8.7.3",
     "sass": "^1.39.0",
-    "tls": "^0.0.1",
     "vue-social-sharing": "^3.0.8"
   },
   "description": "## Build Setup",
   "main": "nuxt.config.js",
   "author": "swenlii",
-  "license": "ISC",
+  "license": "apache-2.0",
   "devDependencies": {
     "@nuxtjs/style-resources": "^1.2.1",
     "body-parser": "^1.19.0",
     "mysql2": "^2.3.0",
     "sass-loader": "^10.1.1",
-    "webpack": "^4.46.0"
+    "webpack": "^5.72.1"
   }
 }

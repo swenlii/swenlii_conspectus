@@ -1,55 +1,83 @@
 <template>
-  <div class="content home-page">
+<div class="content home-page">
+<div class="black-for-borders">
     <section class="main-section">
       <h2>Что нужно знать, чтобы создать свой сайт?</h2>
-      <p class="about-site">Делать сайт - дело не шуточное. Может показаться, что делать сайт легко. Но это не так.
-        Если хочешь зарабатывать на этом деньги, для начала придется много учится. Устраиваясь на работу,
-        ты можешь просидеть в учениках год. И то если повезет. Без усидчивости о самостоятельной
-        разработке сайта "с нуля" можно забыть.</p>
+      <p class="about-site">В период работы я много чему училась самостоятельно и накопила большое количество конспектов. 
+          В какой-то определенный момент мне пришла идея, а почему бы мне не поделиться своими знаниями с людьми?
+          Делать сайт - дело не шуточное. И этому делу нужно учиться. Лучше всего начать учится всему самостоятельно.
+          Я попробую помочь тебе влиться в нашу среду. Не претендую на
+          уникальность своего контента, но постараюсь изложить максимально в доступной форме.</p>
 
       <details>
         <summary>Три главных столпа</summary>
-        <div>Something small enough to escape casual notice.</div>
+        <div>
+          <p>Самые важные языки в веб-программировании, без которых не возможна разработка сайта. 
+          Не важно, какой сайт ты хочешь, какую часть сайта ты разрабатываешь. Тебе все равно нужно знать их.</p>
+          <ul>
+            <li><a href="/articles?category=html">HTML - разметь свою страницу</a></li>
+            <li><a href="/articles?category=css">СSS - укрась страницу по своему вкусу</a></li>
+            <li><a href="/articles?category=js">JavaScript - добавь сайту интерактивности</a></li>
+          </ul>
+        </div>
       </details>
       <details>
         <summary>Библиотеки и фреймворки</summary>
-        <div>Something small enough to escape casual notice.</div>
+        <div>
+          <p>После того, как ты научился создавать самые простые сайты, стоит приступить к более сложным
+          инструментам разработки. Теперь ты должен выбрать - разработка внешней части сайта или разработка "под капотом"? </p>
+          <p>Эта глава раскажет тебе о внешней части сайта. Существует множество библиотек и фреймворков, облегчающих работу front-end разработчикам. 
+          Какие использовать, ты выбираешь сам. Я рассмотрю только самые важные и только те, что знаю сама.</p>
+          <ul>
+            <li><a href="#">GIT. Его знает каждый разработчик.</a></li>
+            <li><a href="#">Webpack - инструмент для сборки проектов</a></li>
+            <li><a href="#">SCSS - упрости разработку CSS</a></li>
+            <li><a href="#">Vue - один из трех самых популярных фреймворков</a></li>
+            <li><a href="#">БЭМ - устаревшая терминология или важная информация?</a></li>
+            <li><a href="#">Bootstrap - резиновый сайт с минимумом усилий</a></li>
+            <li><a href="#">JQuery устаревший? Почему он требуется в вакансиях?</a></li>
+          </ul>
+        </div>
       </details>
       <details>
-        <summary>Инструменты разработчика</summary>
-        <div>Something small enough to escape casual notice.</div>
+        <summary>Создание сервера</summary>
+        <div>
+          <p>После изучения предыдущей главы тебя смело можно назвать front-end разработчиком. Эта глава создана для тех, кто хочет
+          стать back-end разработчиков и разрабатывать серверную часть сайта. </p>
+          <ul>
+          <li><a href="#">Как работает интернет?</a></li>
+          <li><a href="#">Websockets и REST API - два страшных слова!</a></li>
+          <li><a href="#">PHP - язык для back-end</a></li>
+          <li><a href="#">Node.js - как создать сервер на JavaScript?</a></li>
+        </ul>
+        </div>
       </details>
       <details>
         <summary>Материалы для сайта</summary>
-        <div>Something small enough to escape casual notice.</div>
+        <div>Пока пусто. Приходи позже.</div>
       </details>
 
     </section>
     <section class="other-info">
       <div class="who-create">
         <h3>Кто создал сайт?</h3>
-        <p>Привет! Я создатель этого сайта. Буду краток. Это сайт создан мной для меня. Не претендую на
-          уникальность контента, но постараюсь изложить максимум информации в доступной форме. Почему мне
-          можно верить? Потому что я имею опыт в программировании и разработке. Более подробно в портфолио.</p>
-        <a href="https://swenlii.com">GO TO PORTFOLIO</a>
+        <p>Я разработчик, имеющий более 3 лет стажа. За свою практику я работала в разных компаниях и создала более 10 проектов.
+          Большую часть времени я училась самостоятельно. У меня есть опыт в обучении людей и я отлично с этим справлялась.
+          Мои компетенции можно посмотреть на моем личном сайте.</p>
+        <a href="https://swenlii.com">МОЙ САЙТ</a>
       </div>
       <div class="second-block">
-        <div class="last-art">
+        <div class="last-art" v-if="last">
           <h3>{{ last && last.title ? last.title : '' }}</h3>
-          <img src="/images/image-2.jpg">
+          <img v-if="last.img" :src="'/images/articles/' + last.img" alt="">
           <p>{{last && last.description ? last.description : ''}}</p>
 
           <router-link :to="'/article/' + (last && last.art_id ? last.art_id : 'title')">Читать      ⟶</router-link>
         </div>
-        <div class="changes">
-          <h3>Обновления на сайте</h3>
-          <ul>
-            <li>Новая статья на сайте: <nuxt-link to="/article/art-1">Что такое role и где пользоваться этим атрибутом</nuxt-link></li>
-            <li>Добавлен новый тип поиска по вопросам. Просто введи "Как изменить css через js"</li>
-            <li>Новая категория:  <nuxt-link to="/articles?category=html">Webpack</nuxt-link></li>
-            <li>Добавлены теги, упрощающие поиск нужной информации</li>
-            <li>Добавлена темная тема сайта</li>
-          </ul>
+        <div class="changes" v-if="this.changes">
+          <h3>Последние обновления</h3>
+          <div v-html="changes.html"></div>
+          <router-link to="/changes">Читать      ⟶</router-link>
         </div>
       </div>
       <!--noindex-->
@@ -64,24 +92,27 @@
       </form>
     </section>
   </div>
+</div>
+  
 </template>
 
 <script>
 
 export default {
   name: 'Home',
+  props: ['connect'],
   data: function () {
     return {
       emailSpam: '',
-      last: null
+      last: null,
+      changes: null
     }
   },
   async fetch() {
-    let con = await this.$api('info','checkconection');
-    if (con === 'ok') {
-      this.last = await this.$api('articles', 'last');
-      this.last = this.last[0];
-    }
+    this.last = await this.$api('articles', 'last');
+    this.last = this.last[0];
+    this.changes = await this.$api('info', 'changes');
+    this.changes = this.changes[0];
   },
 
   head() {
@@ -91,7 +122,7 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: 'Блог о программировании, конспектирующий многие учебники и курсы в один небольшой сайт, логично называемый "Conspectus".'
+          content: 'Блог о программировании "Conspectus". Сборник конспектов одного разработчика.'
         },
         {
           hid: 'keywords',
@@ -120,13 +151,28 @@ export default {
 
 <style lang="scss" scoped>
 @import '~assets/styles/variables.scss';
+
+main {
+    padding: 0 2em;
+  }
+
+main > * {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .black-for-borders {
+    background-color: $black;
+     display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-column-gap: 1px;
+  animation: 0.7s to-page;
+  }
 .home-page {
   margin-top: 2em;
-  animation: 2s to-page;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  background-color: $black;
-  grid-column-gap: 1px;
+  padding: 0 2em;
+  background-color: $white2;
+  
 
   & > * {
     margin-right: auto;
@@ -140,10 +186,9 @@ export default {
   }
 
   .main-section {
-    padding: 2em 4em 6em 4em;
+    padding: 1em 1em 3em 1em;
     flex: 1;
     position: relative;
-    animation: 1s to-left;
     background-color: $white2;
   }
 
@@ -206,7 +251,6 @@ export default {
   .other-info {
     background-color: $white2;
     position: relative;
-    animation: 1s to-right;
 
     h3 {
       @extend .font-style-2;
@@ -261,7 +305,7 @@ export default {
       background-color: $white2;
       img {
         background-color: $black;
-        min-height: 200px;
+        min-height: 100px;
         width: 100%;
         filter: grayscale(100%);
       }
@@ -329,7 +373,7 @@ export default {
       #loading {
         width: 30px;
         height: 30px;
-        background-image: url("/images/icons/time.png");
+        background-image: url("/images/icons/time.webp");
         background-size: contain;
         margin: 0.5em;
         display: none;

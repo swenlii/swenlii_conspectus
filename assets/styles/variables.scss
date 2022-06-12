@@ -1,8 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=PT+Mono&display=swap');
 
-$white1: #eeeeee;
+$white1: #f0efef;
 $white2: #dedede;
 $white3: #c1c1c1;
 
@@ -11,7 +8,6 @@ $black2: #3d3d3d;
 $black3: #1f1f1f;
 
 $font-1: 'EB Garamond', serif;
-$font-2: 'PT Mono', serif;
 $font-3: 'Oswald', sans-serif;
 
 .font-style-1 {
@@ -30,7 +26,7 @@ $font-3: 'Oswald', sans-serif;
 .font-style-3 {
   font-family: $font-1;
   font-weight: 400;
-  font-size: 19px;
+  font-size: 1.1em;
   letter-spacing: 0.03em;
 }
 
@@ -47,13 +43,4 @@ $font-3: 'Oswald', sans-serif;
   font-size: 0.8em;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-}
-
-@keyframes load {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(180deg);
-  }
 }

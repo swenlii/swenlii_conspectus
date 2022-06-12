@@ -44,7 +44,7 @@ let code = `
 
 <div class="warning">
   <div>
-    <img src="/images/icons/info.png">
+    <img src="/images/icons/info.webp">
   </div>
   <div>
     <span>Внимание</span>

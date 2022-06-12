@@ -45,8 +45,8 @@
       <h3>Контент</h3>
       <div class="second-form">
         <div id="art-img-file">
-          <label>Главная картинка (Не забудь скачать картинку в папку)</label>
-          <input type="file" name="artImg" id="art-file">
+          <label>Главная картинка (не более 700px в ширину, формат webp)</label>
+          <input type="text" name="artImg" placeholder="image.webp" id="art-file">
         </div>
         <div>
           <div class="buttons-for-text">
@@ -104,7 +104,7 @@ export default {
       artSim: '',
       artCat: 'Категории',
       artLib: false,
-      artImg: null,
+      artImg: '',
       artText: '',
       artDop: false,
       artDopCon: `[
@@ -191,18 +191,13 @@ export default {
   },
   async fetch() {
     try {
-      let con = await this.$api('info','checkconection');
-      if (con === 'ok') {
-        this.categories = await this.$api("info", "categories");
-      }
+      this.categories = await this.$api("info", "categories");
     } catch (e) {
       console.error("addArt.vue: " + e);
     }
   },
   methods: {
     async addartnow() {
-      console.log("add article");
-
       if (this.artCat === 'Категории') {
         alert("Вы не выбрали категорию")
         return;
@@ -225,14 +220,13 @@ export default {
         artSim:    this.artSim,   
         artCat:    this.artCat,   
         artLib:    this.artLib, 
-        artImg:    file ? `${this.artId}.${file.type.split("/")[1]}` : null,  
+        artImg:    this.artImg,  
         artText:   this.artText,  
         artDop:    this.artDop,   
         artDopCon: this.artDop ? this.artDopCon : null
       }
       document.getElementById('loading').classList.add('on');
       let res = await this.$api('articles', 'add', data);
-      console.log(res);
       if (res === 'ok')
         alert('Статья сохранена!')
       else 
@@ -305,7 +299,7 @@ export default {
       this.artText += `
 <div class="warning">
   <div>
-    <img src="/images/icons/info.png">
+    <img src="/images/icons/info.webp">
   </div>
   <div>
     <span>Внимание</span>
@@ -318,7 +312,7 @@ export default {
       this.artText += `
 <div class="note">
   <div>
-    <img src="/images/icons/pencil.png">
+    <img src="/images/icons/pencil.webp">
   </div>
   <div>
     <span>Заметка</span>
@@ -331,7 +325,7 @@ export default {
       this.artText += `
 <div class="info">
   <div>
-    <img src="/images/icons/info.png">
+    <img src="/images/icons/info.webp">
   </div>
   <div>
     <span>Информация</span>
@@ -344,7 +338,7 @@ export default {
       this.artText += `
 <div class="question">
   <div>
-    <img src="/images/icons/question.png">
+    <img src="/images/icons/question.webp">
   </div>
   <div>
     <span>Вопрос</span>
@@ -475,7 +469,7 @@ export default {
       #loading {
       width: 30px;
       height: 30px;
-      background-image: url("/images/icons/time.png");
+      background-image: url("/images/icons/time.webp");
       background-size: contain;
       margin: 0.5em;
       opacity: 0;

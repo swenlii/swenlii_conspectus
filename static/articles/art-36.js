@@ -1,7 +1,7 @@
 let code = `
 <div class="question">
   <div>
-    <img src="/images/icons/question.png">
+    <img src="/images/icons/question.webp">
   </div>
   <div>
     <span>Вопрос</span>
@@ -11,7 +11,7 @@ let code = `
 
 <div class="info">
   <div>
-    <img src="/images/icons/info.png">
+    <img src="/images/icons/info.webp">
   </div>
   <div>
     <span>Информация</span>
@@ -21,7 +21,7 @@ let code = `
 
 <div class="note">
   <div>
-    <img src="/images/icons/pencil.png">
+    <img src="/images/icons/pencil.webp">
   </div>
   <div>
     <span>Заметка</span>
@@ -31,7 +31,7 @@ let code = `
 
 <div class="warning">
   <div>
-    <img src="/images/icons/info.png">
+    <img src="/images/icons/info.webp">
   </div>
   <div>
     <span>Внимание</span>

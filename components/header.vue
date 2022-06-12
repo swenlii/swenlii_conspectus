@@ -2,8 +2,8 @@
   <header :style="menuOpen ? 'width: 250px' : 'width: auto'">
     <div id="big-menu" :class="menuOpen ? 'menu' : 'hide-menu menu'">
       <div class="name-site">
-        <div class="head-show svern" tooltip="Свернуть" @click="$emit('upgrade-menu', false)"><img alt="home" src="/images/icons/right.png" style="transform: rotate(180deg)"></div>
-        <div class="head-show" tooltip="Поиск" @click="$emit('upgrade-search', true)"><img alt="find" src="/images/icons/find.png"></div>
+        <div class="head-show svern" tooltip="Свернуть" @click="$emit('upgrade-menu', false)"><img alt="home" src="/images/icons/right.webp" style="transform: rotate(180deg)"></div>
+        <div class="head-show" tooltip="Поиск" @click="$emit('upgrade-search', true)"><img alt="find" src="/images/icons/find.webp"></div>
       </div>
       <nav>
         <ul>
@@ -56,9 +56,6 @@
               <span class="head-show">О сайте</span>
             </router-link>
           </li>
-<!--          <li class="head-show">
-            <router-link to="/help-me">Помочь мне</router-link>
-          </li>-->
         </ul>
       </nav>
       <div class="theme-block">
@@ -71,37 +68,37 @@
     </div>
     <div id="little-menu" :class="menuOpen ? 'hide-menu menu' : 'menu'">
       <div class="name-site">
-        <div class="head-hide" tooltip="Развернуть" @click="$emit('upgrade-menu', true)"><img alt="home" src="/images/icons/right.png"></div>
-        <div class="head-hide" tooltip="Поиск" @click="$emit('upgrade-search', true)"><img alt="find" src="/images/icons/find.png"></div>
+        <div class="head-hide" tooltip="Развернуть" @click="$emit('upgrade-menu', true)"><img alt="home" src="/images/icons/right.webp"></div>
+        <div class="head-hide" tooltip="Поиск" @click="$emit('upgrade-search', true)"><img alt="find" src="/images/icons/find.webp"></div>
       </div>
       <nav>
         <ul>
           <li class="head-hide" tooltip="Дом">
             <router-link tooltip="Дом" to="/">
-              <img alt="home" src="/images/icons/home.png">
+              <img alt="home" src="/images/icons/home.webp">
             </router-link>
           </li>
           <li class="selected">
             <div  @click="randomArticle">
-              <span class="head-hide" tooltip="Рандомная статья"><img alt="random" src="/images/icons/random.png" style="height: 20px"></span>
+              <span class="head-hide" tooltip="Рандомная статья"><img alt="random" src="/images/icons/random.webp" style="height: 20px"></span>
             </div>
           </li>
           <li>
             <router-link to="/handbook">
-              <span class="head-hide" tooltip="Учебник"><img alt="book" src="/images/icons/book.png"></span>
+              <span class="head-hide" tooltip="Учебник"><img alt="book" src="/images/icons/book.webp"></span>
             </router-link>
           </li>
           <li>
-            <router-link class="head-hide" tooltip="Все статьи" to="/articles"><img alt="category" src="/images/icons/list.png"></router-link>
+            <router-link class="head-hide" tooltip="Все статьи" to="/articles"><img alt="category" src="/images/icons/list.webp"></router-link>
           </li>
           <li>
             <router-link to="/library">
-              <span class="head-hide" tooltip="Библиотека"><img alt="library" src="/images/icons/archive.png"></span>
+              <span class="head-hide" tooltip="Библиотека"><img alt="library" src="/images/icons/archive.webp"></span>
             </router-link>
           </li>
           <li>
             <router-link to="/about">
-              <span class="head-hide" tooltip="О сайте"><img alt="about" src="/images/icons/info.png" style="height: 20px"></span>
+              <span class="head-hide" tooltip="О сайте"><img alt="about" src="/images/icons/info.webp" style="height: 20px"></span>
             </router-link>
           </li>
         </ul>
@@ -109,7 +106,7 @@
       <div class="theme-block">
         <div>
           <button  @click="themeClick ()">
-            <span class="head-hide" tooltip="Сменить тему"><img alt="theme"  src="/images/icons/theme.png"></span>
+            <span class="head-hide" tooltip="Сменить тему"><img alt="theme"  src="/images/icons/theme.webp"></span>
           </button>
         </div>
       </div>
@@ -145,12 +142,8 @@ export default {
   },
   mounted() {
     let theme = this.$cookies.get('theme');
-    if (!theme) {
-      this.$cookies.set('theme', 'light');
-      theme = 'light';
-    }
 
-    if (theme === 'dark') {
+    if (theme && theme === 'dark') {
       document.querySelector('body').classList.add('dark');
       document.getElementById('app').classList.add('dark');
     }
@@ -168,7 +161,7 @@ header {
   z-index: 888;
   background-color: $black;
   color: $white1;
-  transition: 2s all ease;
+  transition: 0.7s all ease;
   display: flex;
   width: auto;
   position: sticky;
@@ -203,12 +196,13 @@ header {
   }
 
   .hide-menu {
-    visibility: hidden;
+    opacity: 0;
   }
 
   #big-menu {
     width: 250px;
-    transition: margin-left 1.1s ease, visibility 1s ease;
+    min-height: 100vh;
+    transition: margin-left 0.7s ease;
 
     &.hide-menu {
       margin-left: -250px;
@@ -230,7 +224,7 @@ header {
 
   #little-menu {
     z-index: 888;
-    transition: opacity 0.7s ease, visibility 1s ease, width 0.5s ease;
+    transition: opacity 0.7s ease, width 0.4s ease;
 
     &.hide-menu {
       opacity: 0;

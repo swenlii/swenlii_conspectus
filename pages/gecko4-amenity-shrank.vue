@@ -44,7 +44,7 @@
       </div>
       <div v-else-if="admin === 'error'">
         <div class="empty">
-          <img src="/images/error.png" alt="не найдено">
+          <img src="/images/error.webp" alt="не найдено">
           <h2>Неправильный логин и пароль.</h2>
           <p>Вы ввели неверный логин и пароль. Перезагрузите страницу и попробуйте заново. Убедитесь, что вводите все верно.
           </p>
@@ -52,7 +52,7 @@
       </div>
       <div v-else>
         <div class="empty">
-          <img src="/images/error2.png" alt="ошибка">
+          <img src="/images/error2.webp" alt="ошибка">
           <h2>Произошла ошибка.</h2>
           <p>Сервер вернул непредсказуемый результат. Свяжитесь с разработчиком на странице
             <router-link to="/about">"О нас"</router-link>

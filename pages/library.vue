@@ -3,24 +3,24 @@
     <div class="content-header">
       <div>
         <h1 first-word="Бибилеотка">Библиотека</h1>
-        <p>Полезные ссылки,  дополнительные материалы и даже что-то личное</p>
+        <p>Немного сумбурного материала, статей, не объедененных в учебники. Дополнительные материалы, учебные статьи, важная информация и так далее.</p>
       </div>
       <div>
-        <img src="/images/library-2.jpg" alt="">
+        <img src="/images/library-2.webp" alt="">
       </div>
     </div>
 
     <div class="library-content" v-if="arts && arts.length > 0">
       <div style="display: none;"></div>
       <router-link :to="'/article/' + art.art_id" v-for="art in arts" :key="'library-art-' + art.id" @click.native="clickLink(art.art_id)">
-        <h4>{{ art.title }}</h4>
+        <h2>{{ art.title }}</h2>
         <p>{{ art.description }}</p>
       </router-link>
 
     </div>
     <div v-else>
       <div class="empty">
-        <img src="/images/empty.png" alt="не найдено">
+        <img src="/images/empty.webp" alt="не найдено">
         <h2>Ничего не найдено.</h2>
         <p>Возможно запрос устарел или вам стоит изменить запрос. Если вы уверены, что это должно работать, свяжитесь с разработчиком на странице
           <router-link to="/about">"О нас"</router-link>
@@ -41,7 +41,7 @@ export default {
         {
           hid: 'description',
           name: 'description',
-          content: 'Немного сумбурного материала, не объедененного в учебники. Дополнительные материалы, учебные статьи, не посвященные программированию и так далее.'
+          content: 'Немного сумбурного материала, не объедененного в учебники. Дополнительные материалы, учебные статьи и так далее.'
         },
         {
           hid: 'keywords',
@@ -72,10 +72,7 @@ export default {
     }
   },
   async fetch () {
-    let con = await this.$api('info','checkconection');
-    if (con === 'ok') {
-      this.arts = await this.$api('info', 'library');
-    }
+    this.arts = await this.$api('info', 'library');
   }
 }
 </script>
@@ -91,9 +88,11 @@ export default {
 .library-content {
   padding: 1em 3em;
   position: relative;
-  animation: 2s to-top;
+  animation: 0.6s to-top;
 
-  h4 {
+  h2 {
+    @extend .font-style-4;
+    font-size: 2em;
     margin: 0.4em 0 0 0;
   }
 

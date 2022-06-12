@@ -39,11 +39,14 @@ export default {
       this.menuOpen = v;
     },
     upgradeSearch (v) {
+      this.menuOpen = !this.menuOpen;
       this.searchOpen = v;
     },
     asideMenMob () {
       document.querySelector('.aside-art').style.display = 'flex';
-      this.$refs.m725.showAside = 1;
+      document.querySelector('.aside-art').classList.add('open-aside');
+      console.log(this.$refs.m725.$children[0].showAside);
+      this.$refs.m725.$children[0].showAside = 1;
     },
     searchInp (event) {
       if (event.keyCode === 13) {
@@ -53,11 +56,6 @@ export default {
     pathWatch (to) {
       this.menuOpen = to.fullPath === '/' && window.innerWidth > 1100
       this.searchOpen = to.fullPath === '/'
-      if (to.fullPath === '/'){
-        document.getElementsByTagName("main")[0].classList.add('home');
-      } else {
-        document.getElementsByTagName("main")[0].classList.remove('home');
-      }
       if (to.fullPath.includes('/article/') || to.fullPath.includes('/article-')) {
         document.getElementById('art-aside').style.display = 'block';
       } else {
@@ -77,19 +75,6 @@ export default {
       this.litMob = true;
     }
   },
-  async fetch() {
-    try {
-      let con = await this.$api('info','checkconection');
-      if (con === 'ok') {
-        this.articles = await this.$api("articles", "index");
-      } else {
-        console.log(con);
-        alert(`ERROR! I can't connection to database! \n${con}`);
-      }
-    } catch (e) {
-      console.error("default.vue: " + e);
-    }
-  }
 };
 </script>
 
