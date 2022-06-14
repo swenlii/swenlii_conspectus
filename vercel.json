@@ -1,36 +1,28 @@
 {
-  "version": 2,
-    "env": {
-        "ON_VERCEL": "true"
-    },
-    "builds": [
-        {
-            "src": "api/**/*.js",
-            "use": "@vercel/node"
-        },
-        {
-          "src": "plugins/**/*.js",
+  "version": 3,
+  "builds": [
+      {
+          "src": "api/**/*.js",
           "use": "@vercel/node"
-        },
-        {
-            "src": "nuxt.config.js",
-            "use": "@nuxtjs/vercel-builder",
-            "config": {
-              "serverFiles": ["api/**", "plugins/**"]
-            }
-        }
-    ],
-    "routes": [
-        {  "src": "/api/(.*)", "dest": "api/api-server.js" },
-        { "src": "/_nuxt/.+", "headers": { "Cache-Control": "max-age=31557600" } },
-        { "src": "/(.*)", "dest": "/" },
-        {
-          "src": "/sw.js",
-          "continue": true,
-          "headers": {
-            "Cache-Control": "public, max-age=0, must-revalidate",
-            "Service-Worker-Allowed": "/"
+      },
+      {
+          "src": "nuxt.config.js",
+          "use": "@nuxtjs/vercel-builder",
+          "config": {
+            "serverFiles": ["api/**"]
           }
+      }
+  ],
+  "routes": [
+      {  "src": "/api/(.*)", "dest": "api/api-server.js" },
+      { "src": "/_nuxt/.+", "headers": { "Cache-Control": "max-age=31557600" } },
+      {
+        "src": "/sw.js",
+        "continue": true,
+        "headers": {
+          "Cache-Control": "public, max-age=0, must-revalidate",
+          "Service-Worker-Allowed": "/"
         }
-    ]
+      }
+  ]
 }
