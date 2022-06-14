@@ -9,14 +9,21 @@
             "use": "@now/node"
         },
         {
+          "src": "plugins/**/*.js",
+          "use": "@now/node"
+        },
+        {
             "src": "nuxt.config.js",
-            "use": "@nuxtjs/now-builder"
+            "use": "@nuxtjs/now-builder",
+            "config": {
+              "serverFiles": ["api/**", "plugins/**"]
+            }
         }
     ],
     "routes": [
-        {  "src": "/api/(.*)", "dest": "api/index.js" },
-        { "src": "/api", "dest": "api/index.js" },
-        { "src": "/(.*)", "dest": "$1" },
+        {  "src": "/api/(.*)", "dest": "api/api-server.js" },
+        { "src": "/_nuxt/.+", "headers": { "Cache-Control": "max-age=31557600" } },
+        { "src": "/(.*)", "dest": "/" },
         {
           "src": "/sw.js",
           "continue": true,
