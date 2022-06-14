@@ -1,7 +1,7 @@
 const constants = process.env.NODE_ENV !== 'production' && process.env._AXIOS_BASE_URL_ !== 'http://localhost:3000/'? process.env : require("../CONSTANTS.js");
 const Serverless = require('serverless-postgres');
 
-async function query_mysq (sql, params = []) {
+/*async function query_mysq (sql, params = []) {
   try {
     const connection = await mysql.createConnection({
     host: "127.0.0.1",
@@ -19,7 +19,7 @@ async function query_mysq (sql, params = []) {
     throw err;
   }
   
-}
+}*/
 
 async function query (sql, params = []) {
   try {

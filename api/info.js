@@ -98,23 +98,4 @@ async function addchanges({changesName, changesText}) {
   return 'ok'
 }
 
-async function checkconection () {
-  try {
-    const Serverless = require('serverless-postgres');
-    const client = new Serverless({
-      user: process.env.DB_USER ? process.env.DB_USER : constants.DB_USER,
-      host: process.env.DB_HOST ? process.env.DB_HOST : constants.DB_HOST,
-      database: process.env.DB_NAME ? process.env.DB_NAME : constants.DB_NAME,
-      password: process.env.DB_PASSWORD ? process.env.DB_PASSWORD : constants.DB_PASSWORD,
-      port: process.env.DB_PORT ? process.env.DB_PORT : constants.DB_PORT,
-    });
-    await client.connect();
-    await client.clean();
-    return 'ok'
-
-  } catch (err) {
-    return (err.message);
-  }
-}
-
-export {categories, library, comment, subscribe, sendMail, randomArt, changes, adminLogin, addcat, addchanges, checkconection}
+export {categories, library, comment, subscribe, sendMail, randomArt, changes, adminLogin, addcat, addchanges}
