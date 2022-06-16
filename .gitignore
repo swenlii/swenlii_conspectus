@@ -93,4 +93,13 @@ sw.*
 
 package-lock.json
 
-.vercel/*
+CONSTANTS.js
+
+
+.vercel
+
+.vs
+
+.vscode
+
+.editorconfig
