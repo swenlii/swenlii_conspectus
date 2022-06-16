@@ -203,13 +203,6 @@ export default {
         return;
       }
       let file = document.getElementById("art-file").files[0];
-      
-      // TODO загрузка изображения отдельно от всего остального, так как оно сложнее. 
-      // Но по умолчанию изображение с именем, состоящим из id статьи. Поэтому пусть пока будет так. 
-      // Если не получится, пусть изображение будем вручную класть, это все же легче, чем мучаться.
-      // let formData = new FormData();
-      // formData.append('file', file, `${this.artId}.${file.type.split("/")[1]}`);
-      // this.$axios.post('/upload', formData, { headers: { "Content-Type": "multipart/form-data" }});
 
       let data = {
         artId:     this.artId,    

@@ -65,11 +65,6 @@ export default {
       let coms = await this.$api("articles", "comments", { id: this.articles[event.target.value].art_id });
       this.oneart.comments = coms.length;
       this.conttext= (require('../static/articles/' + this.oneart.file)).code;
-      // this.$nextTick(() => {
-      //     if (process.client) {
-      //       hljs.highlightAll();
-      //     }
-      //   });
     },
     getText() {
       this.open = !this.open;

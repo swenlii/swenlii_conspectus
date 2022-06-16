@@ -27,8 +27,6 @@ async function add({artId, artName, artDesc, artKeys, artTags, artSim, artCat, a
   fs.writeFile(`static/articles/${artId}.js`, `let code = \`${artText}\`; export {code}`, function (err) {
     if (err) throw err;
   });
-  
-  // TODO подумать над изображениями
 
   console.log(artCat, artName, artTags, artSim);
 
@@ -69,8 +67,6 @@ async function edit({artId, artName, artDesc, artKeys, artTags, artSim, artCat, 
   fs.writeFile(`static/articles/${artId}.js`, `let code = \`${artText}\`; export {code}`, function (err) {
     if (err) throw err;
   });
-  
-  // TODO подумать над изображениями
 
   let art = await query(`UPDATE articles SET title = $1, description = $2, img = $3, categories = $4, tags = $5, sim_arts = $6, dopcon = $7, dopconarr = $8, lib = $9, keywords = $10 WHERE art_id = $11`, [
     artName, artDesc, artImg, artCat, artTags && artTags.length > 0 ? artTags : null, artSim && artSim.length > 0 ? artSim : null, artDop, artDopCon ? artDopCon : null, artLib, artKeys, artId ]);

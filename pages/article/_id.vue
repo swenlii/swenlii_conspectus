@@ -204,8 +204,8 @@ export default {
   data: function () {
     return {
       article: null,
-      questNum: 1, // первый вопрос в начале
-      showAside: 1, // показывать или нет
+      questNum: 1, // Номер текущего показываемого вопроса
+      showAside: 1, 
       width: 800,
       heads: [],
       answer: '',
@@ -259,7 +259,6 @@ export default {
   methods: {
     nextQuest(type, answ, a) {
       this.questNum++;
-      // get length quests
       let length = 0;
       for (let i = 1; i < this.article.dopconarr.length; i++) {
         if (this.article.dopconarr[i].type === 'test')
@@ -409,13 +408,6 @@ export default {
     this.article.sim_arts = await this.$api('articles', 'sim_arts', {ids: this.article.sim_arts});
   
     this.article.content = (require('../../static/articles/' + this.article.file)).code;
-  
-    // this.$nextTick(() => {
-    //   if (process.client) {
-    //     this.createTooltips();
-    //     hljs.highlightAll();
-    //   }
-    // });
 
   },
   async mounted() {

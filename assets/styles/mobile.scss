@@ -35,7 +35,7 @@
     margin-top: -1.6em !important;
   }
 
-  // в статье не отображается aside. Только в полноэкранном режиме
+  // при такой ширине экрана aside отображается только в полноэкранном режиме
   .open-aside {
     position: fixed !important;
     height: 100vh !important;
@@ -168,7 +168,6 @@
 }
 
 @media screen and (max-width: 800px){
-  // уменьшаем паддинги
   .article-page article h1 {
     margin: 0px 20px 10px 20px !important;
     font-size: 3em !important;
