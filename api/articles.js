@@ -1,7 +1,6 @@
 const {query} = require("./db-connect");
 var fs = require('fs');
 let nodemailer = require('nodemailer');
-const constants = require("../CONSTANTS.js");
 
 async function index() {
   return await query('SELECT *, TO_CHAR(date, \'DD Mon YYYY\') AS date2 FROM articles');
@@ -37,12 +36,12 @@ async function add({artId, artName, artDesc, artKeys, artTags, artSim, artCat, a
     artId, artName, artDesc, artId + '.js', artImg, artCat, artTags && artTags.length > 0 ? artTags : null, artSim && artSim.length > 0 ? artSim : null, artDop ? 1 : 0, artDopCon ? artDopCon : null, artLib ? 1 : 0, artKeys ]);
   
   let transporter = nodemailer.createTransport({
-    host: constants.mail_host,
-    port: constants.mail_port,
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
     secure: true,
     auth: {
-      user: constants.mail_user,
-      pass: constants.mail_pass
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS
     }
   });
 
@@ -51,8 +50,8 @@ async function add({artId, artName, artDesc, artKeys, artTags, artSim, artCat, a
   for(let i = 0; i < mails.length; i++) {
     try {
       await transporter.sendMail({
-        from: constants.mail_user,
-        sender: constants.mail_user,
+        from: process.env.MAIL_USER,
+        sender: process.env.MAIL_USER,
         to: mails[i].email,
         subject: artName,
         html: require('../static/mail.js').mail("Статья специально для тебя!", "<p>На сайте Conspectus новая статья! На этот раз на тему «" + cat[0].text + "»</p> <h4 style=\"font-family: 'Oswald', 'Impact', 'Arial Black', sans-serif; font-size: 1.5em; font-weight: 700; letter-spacing: 0.02em;\">" + artName + "</h4> <p>" + artDesc + "</p>"),
