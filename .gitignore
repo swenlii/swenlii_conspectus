@@ -93,9 +93,6 @@ sw.*
 
 package-lock.json
 
-CONSTANTS.js
-
-
 .vercel
 
 .vs

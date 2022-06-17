@@ -12,12 +12,14 @@
     "@nuxtjs/axios": "^5.13.6",
     "@nuxtjs/pwa": "^3.3.5",
     "@nuxtjs/vercel-builder": "^0.22.1",
+    "body-parser": "^1.20.0",
     "cookie-universal-nuxt": "^2.1.5",
     "core-js": "^3.15.1",
+    "esm": "^3.2.25",
     "nodemailer": "^6.6.3",
     "nuxt": "^2.15.7",
+    "pg": "^8.7.3",
     "sass": "^1.39.0",
-    "serverless-postgres": "^1.10.2",
     "vercel": "^25.1.0",
     "vue-social-sharing": "^3.0.8"
   },
@@ -27,9 +29,8 @@
   "license": "apache-2.0",
   "devDependencies": {
     "@nuxtjs/style-resources": "^1.2.1",
-    "body-parser": "^1.19.0",
     "mysql2": "^2.3.0",
     "sass-loader": "^10.1.1",
-    "webpack": "^4.36.0"
+    "webpack": "^4.46.0"
   }
 }

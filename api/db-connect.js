@@ -1,23 +1,23 @@
-const Serverless = require('serverless-postgres');
+
+const { Pool, Client } = require('pg');
 
 async function query (sql, params = []) {
+  console.log(process.env.NODE_PG_FORCE_NATIVE)
   try {
-    const client = new Serverless({
-      user: process.env.DB_USER,
-      host: process.env.DB_HOST,
-      database: process.env.DB_NAME,
-      password: process.env.DB_PASSWORD,
-      port: process.env.DB_PORT,
-    });
-    await client.connect()
-    const res = await client.query(sql, params);
-    await client.clean();
-    return res.rows;
+      const pool = new Pool({
+        user: process.env.DB_USER,
+        host: process.env.DB_HOST,
+        database: process.env.DB_NAME,
+        password: process.env.DB_PASSWORD,
+        port: process.env.DB_PORT,
+      });
+      const res = await pool.query(sql, params);
+      return res.rows;
+    return null
   } catch (err) {
     console.error('in db-connect: ' + err);
     throw err;
   }
-  
 }
 
 export {query}

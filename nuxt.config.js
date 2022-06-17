@@ -103,6 +103,9 @@ export default {
         implementation: require('sass'),
       },
     },
+    plugins: [
+      new webpack.IgnorePlugin({ resourceRegExp: /^pg-native$/ })
+    ]
   },
 
   pwa: {

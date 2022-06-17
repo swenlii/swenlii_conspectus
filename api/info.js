@@ -1,6 +1,5 @@
 const {query} = require("./db-connect");
 let {createTransport} = require('nodemailer');
-const constants = require("../CONSTANTS.js");
 
 async function categories() {
   return await query('SELECT * FROM categories');
@@ -29,19 +28,19 @@ async function randomArt () {
 
 async function sendMail ({name, email, title, mail, page}) {
   let transporter = createTransport({
-    host: constants.mail_host,
-    port: constants.mail_port,
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
     secure: true,
     auth: {
-      user: constants.mail_user,
-      pass: constants.mail_pass
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS
     }
   });
   try {
     await transporter.sendMail({
-      from: constants.mail_user,
+      from: process.env.MAIL_USER,
       sender: email,
-      to: constants.mail_user,
+      to: process.env.MAIL_USER,
       subject: title,
       html: require('../static/mail.js').mail("Новое письмо для тебя!", "<p>*Письмо направилено со страницы '" + page + "' в conspectus</p><h1 style='font-family: 'Oswald', 'Impact', 'Arial Black', sans-serif; font-size: 2em; font-weight: 700; letter-spacing: 0.02em;'>" + title + "</h1><p><h3 style='font-family: 'Oswald', 'Impact', 'Arial Black', sans-serif; font-size: 1.5em; font-weight: 700; letter-spacing: 0.02em;'>Name sender:</h3>" + name + "</p><p><h3 font-family: 'Oswald', 'Impact', 'Arial Black', sans-serif; font-size: 1.5em; font-weight: 700; letter-spacing: 0.02em;>Email for answer:</h3>" + email + "</p><p><h3 font-family: 'Oswald', 'Impact', 'Arial Black', sans-serif; font-size: 1.5em; font-weight: 700; letter-spacing: 0.02em;>Text:</h3><pre>" + mail + "</pre></p>"),
     });
@@ -71,12 +70,12 @@ async function addchanges({changesName, changesText}) {
     changesName, changesText ]);
 
   let transporter = createTransport({
-    host: constants.mail_host,
-    port: constants.mail_port,
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
     secure: true,
     auth: {
-      user: constants.mail_user,
-      pass: constants.mail_pass
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS
     }
   });
 
@@ -84,8 +83,8 @@ async function addchanges({changesName, changesText}) {
   for(let i = 0; i < mails.length; i++) {
     try {
       await transporter.sendMail({
-        from: constants.mail_user,
-        sender: constants.mail_user,
+        from: process.env.MAIL_USER,
+        sender: process.env.MAIL_USER,
         to: mails[i].email,
         subject: changesName,
         html: require('../static/mail.js').mail("Обновление сайта!", "<p>На сайте Conspectus новые изменения!</p> <h4 style=\"font-family: 'Oswald', 'Impact', 'Arial Black', sans-serif; font-size: 1.5em; font-weight: 700; letter-spacing: 0.02em;\">" + changesName + "</h4> <p>Что изменилось:</p>" + changesText),

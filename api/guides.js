@@ -1,6 +1,5 @@
 const {query} = require("./db-connect");
 let nodemailer = require('nodemailer');
-const constants = require("../CONSTANTS.js");
 
 async function index() {
   let ret = await query('SELECT * FROM guides');
@@ -27,12 +26,12 @@ async function add({guideId, guideTitle, guideDesc, guideInfo, guideType, guideK
   };
 
   let transporter = nodemailer.createTransport({
-    host: constants.mail_host,
-    port: constants.mail_port,
+    host: process.env.MAIL_HOST,
+    port: process.env.MAIL_PORT,
     secure: true,
     auth: {
-      user: constants.mail_user,
-      pass: constants.mail_pass
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS
     }
   });
 
@@ -40,8 +39,8 @@ async function add({guideId, guideTitle, guideDesc, guideInfo, guideType, guideK
   for(let i = 0; i < mails.length; i++) {
     try {
       await transporter.sendMail({
-        from: constants.mail_user,
-        sender: constants.mail_user,
+        from: process.env.MAIL_USER,
+        sender: process.env.MAIL_USER,
         to: mails[i].email,
         subject: guideTitle,
         html: require('../static/mail.js').mail("Новое руководство!", "<p>На сайте Conspectus новое руководство!</p> <h4 style=\"font-family: 'Oswald', 'Impact', 'Arial Black', sans-serif; font-size: 1.5em; font-weight: 700; letter-spacing: 0.02em;\">" + guideTitle + "</h4> <p>" + guideDesc + "</p> <p>В руководстве уже " + guideArts.length + " статьи</p>"),
