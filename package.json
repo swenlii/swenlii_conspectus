@@ -21,7 +21,8 @@
     "pg": "^8.7.3",
     "sass": "^1.39.0",
     "vercel": "^25.1.0",
-    "vue-social-sharing": "^3.0.8"
+    "vue-social-sharing": "^3.0.8",
+    "webpack": "^4.46.0"
   },
   "description": "## Build Setup",
   "main": "nuxt.config.js",
@@ -29,8 +30,6 @@
   "license": "apache-2.0",
   "devDependencies": {
     "@nuxtjs/style-resources": "^1.2.1",
-    "mysql2": "^2.3.0",
-    "sass-loader": "^10.1.1",
-    "webpack": "^4.46.0"
+    "sass-loader": "^10.1.1"
   }
 }
