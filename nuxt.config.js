@@ -125,5 +125,17 @@ export default {
       theme_color: "#1f1f1f",
       description: "Блог о программировании \"Conspectus\". Сборник конспектов одного разработчика."
     },
+  },
+
+  axios: {
+    proxy: true
+  },
+  
+  proxy: {
+    '/api/': {
+      target: 'https://localhost:3000/',
+      pathRewrite: { '^/api/': '' },
+      changeOrigin: true
+    }
   }
 }
