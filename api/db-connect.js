@@ -2,7 +2,6 @@
 const { Pool, Client } = require('pg');
 
 async function query (sql, params = []) {
-  console.log(process.env)
   try {
       const pool = new Pool({
         user: process.env.DB_USER,
