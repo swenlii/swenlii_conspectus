@@ -32,7 +32,7 @@
       </form>
       <!--/noindex-->
       <div class="links">
-        <b>Мой email:</b> <a href="mailto:swenliw@gmail.ru">swenliw@gmail.ru</a><br>
+        <b>Мой email:</b> <a href="mailto:ira.swenlii@gmail.com">ira.swenlii@gmail.com</a><br>
         <b>Мой telegram:</b> <a href="https://t.me/swenlii">t.me/swenlii</a><br>
         <b>Мой вк:</b> <a href="https://vk.com/swenlii">vk.com/swenlii</a> <br>
         <b>Мой github:</b> <a href="https://github.com/swenli">github.com/swenli</a> <br>
