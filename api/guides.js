@@ -40,7 +40,7 @@ async function add({guideId, guideTitle, guideDesc, guideInfo, guideType, guideK
     try {
       await transporter.sendMail({
         from: process.env.MAIL_USER,
-        sender: process.env.MAIL_USER,
+        sender: process.env.MAIL_SEND,
         to: mails[i].email,
         subject: guideTitle,
         html: require('../static/mail.js').mail("Новое руководство!", "<p>На сайте Conspectus новое руководство!</p> <h4 style=\"font-family: 'Oswald', 'Impact', 'Arial Black', sans-serif; font-size: 1.5em; font-weight: 700; letter-spacing: 0.02em;\">" + guideTitle + "</h4> <p>" + guideDesc + "</p> <p>В руководстве уже " + guideArts.length + " статьи</p>"),

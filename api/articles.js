@@ -49,7 +49,7 @@ async function add({artId, artName, artDesc, artKeys, artTags, artSim, artCat, a
     try {
       await transporter.sendMail({
         from: process.env.MAIL_USER,
-        sender: process.env.MAIL_USER,
+        sender: process.env.MAIL_SEND,
         to: mails[i].email,
         subject: artName,
         html: require('../static/mail.js').mail("Статья специально для тебя!", "<p>На сайте Conspectus новая статья! На этот раз на тему «" + cat[0].text + "»</p> <h4 style=\"font-family: 'Oswald', 'Impact', 'Arial Black', sans-serif; font-size: 1.5em; font-weight: 700; letter-spacing: 0.02em;\">" + artName + "</h4> <p>" + artDesc + "</p>"),
