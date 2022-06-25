@@ -36,6 +36,8 @@
         <b>Мой telegram:</b> <a href="https://t.me/swenlii">t.me/swenlii</a><br>
         <b>Мой вк:</b> <a href="https://vk.com/swenlii">vk.com/swenlii</a> <br>
         <b>Мой github:</b> <a href="https://github.com/swenli">github.com/swenli</a> <br>
+        <b>Мой twitter:</b> <a href="https://twitter.com/swenlii">twitter.com/swenlii</a> <br>
+        <b>Мой linkedin:</b> <a href="https://www.linkedin.com/in/swenlii">linkedin.com/in/swenlii</a> <br></br>
         <b>Мой сайт:</b> <a href="https://swenlii.up.railway.app/">https://swenlii.up.railway.app/</a> <br>
       </div>
       
