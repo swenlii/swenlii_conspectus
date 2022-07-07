@@ -373,7 +373,7 @@ export default {
       this.$cookies.set('comment-name', this.userCom, {
         path: '/',
         maxAge: 60 * 60 * 24 * 30
-      });
+      }, {expires: '1Y', domain: '/'});
 
       await this.$api('info', 'comment', {user: name, text: text, art_id: this.article.art_id});
       this.comms.push({

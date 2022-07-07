@@ -18,6 +18,7 @@
         <button id="art-aside" style="display: none;" @click="asideMenMob ()">Доп. по статье</button>
       </div>
       <Nuxt @upgrade-search="upgradeSearch" ref="m725"/>
+      <footer style="text-align: center; font-size: 14px"><a href="/lichense">Swenlii © 2021</a></footer>
     </main>
   </div>
 </template>

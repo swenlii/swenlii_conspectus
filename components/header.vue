@@ -56,6 +56,11 @@
               <span class="head-show">О сайте</span>
             </router-link>
           </li>
+          <li>
+            <router-link to="/privacy-policy">
+              <span class="head-show">Политика <br>конфиденциальности</span>
+            </router-link>
+          </li>
         </ul>
       </nav>
       <div class="theme-block">
@@ -125,12 +130,12 @@ export default {
       if (theme && theme === 'dark') {
         document.querySelector('body').classList.remove('dark');
         document.getElementById('app').classList.remove('dark');
-        this.$cookies.set('theme', 'light');
+        this.$cookies.set('theme', 'light', {expires: '1Y', domain: '/'});
       }
       else {
         document.querySelector('body').classList.add('dark');
         document.getElementById('app').classList.add('dark');
-        this.$cookies.set('theme', 'dark');
+        this.$cookies.set('theme', 'dark', {expires: '1Y', domain: '/'});
       }
     },
     async randomArticle () {

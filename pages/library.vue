@@ -61,12 +61,12 @@ export default {
       let visited = this.$cookies.get('visited');
       if (!visited) {
         visited = id;
-        this.$cookies.set('visited', visited);
+        this.$cookies.set('visited', visited, {expires: '1Y', domain: '/'});
         await this.$api('articles', 'addPopularity', {id: id});
       }
       else if (!visited.includes(id)) {
         visited += ',' + id;
-        this.$cookies.set('visited', visited);
+        this.$cookies.set('visited', visited, {expires: '1Y', domain: '/'});
         await this.$api('articles', 'addPopularity', {id: id});
       }
     }
