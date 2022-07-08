@@ -128,6 +128,11 @@ export default {
           hid: 'keywords',
           name: 'keywords',
           content: 'личный, блог, разработка, обучение, программирование, веб'
+        },
+        {
+          hid: 'google-site-verification',
+          name: 'google-site-verification',
+          content: 'L01WHf4MpuHHjGXmXdKRYrq2D0PeJTEzH8By8jw1k2g'
         }
       ],
     };
