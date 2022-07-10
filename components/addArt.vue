@@ -202,7 +202,6 @@ export default {
         alert("Вы не выбрали категорию")
         return;
       }
-      let file = document.getElementById("art-file").files[0];
 
       let data = {
         artId:     this.artId,    
