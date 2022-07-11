@@ -127,15 +127,16 @@ export default {
   methods: {
     themeClick () {
       let theme = this.$cookies.get('theme');
+      console.log(new Date(new Date().getTime() + 1000 * 3600 * 24 * 365))
       if (theme && theme === 'dark') {
         document.querySelector('body').classList.remove('dark');
         document.getElementById('app').classList.remove('dark');
-        this.$cookies.set('theme', 'light', {expires: '1Y', domain: '/'});
+        this.$cookies.set('theme', 'light', {expires: new Date(new Date().getTime() + 1000 * 3600 * 24 * 365)});
       }
       else {
         document.querySelector('body').classList.add('dark');
         document.getElementById('app').classList.add('dark');
-        this.$cookies.set('theme', 'dark', {expires: '1Y', domain: '/'});
+        this.$cookies.set('theme', 'dark', {expires: new Date(new Date().getTime() + 1000 * 3600 * 24 * 365)});
       }
     },
     async randomArticle () {

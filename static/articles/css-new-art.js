@@ -1,11 +1,11 @@
-let code = `<h2 ref="art-point-1">Transition</h2>
+let code = `<h2 id="art-point-1">Transition</h2>
 <code class="inline-code">transition</code> свойство задает что как и сколько времени будет меняться. Например поменять высоту элемента в течении 3 секунд переход - линеен (то есть скорость перехода не меняется со временем):
 
 <pre><code>transition: height 3s linear;</code></pre>
 
 Так уже можно догадаться, что это только сжатое значение. На самом деле оно распределяеться на:
 
-<h5 ref="art-point-2">Состав свойства <code class="inline-code">transition</code></h5>
+<h5 id="art-point-2">Состав свойства <code class="inline-code">transition</code></h5>
 <ul>
   <li><code class="inline-code">transition-property</code> - какое свойство меняется</li>
   <li><code class="inline-code">transition-duration</code> - время перехода</li>
@@ -15,7 +15,7 @@ let code = `<h2 ref="art-point-1">Transition</h2>
 
 Подробней о <code class="inline-code">transition-timing-function</code>. Он задается функцией <code class="inline-code">cubic-bezier(0,0,1,1)</code> (почитайте о ней) и имеет несколько предустановленных переходов:
 
-<h5 ref="art-point-3">Функции <code class="inline-code">transition-timing-function</code></h5>
+<h5 id="art-point-3">Функции <code class="inline-code">transition-timing-function</code></h5>
 <ul>
   <li><b>ease</b> - сначала медленно, потом ускоряется</li>
   <li><b>ease-in</b> - начинается медленно, ускоряется и резко останавливается</li>
@@ -24,7 +24,7 @@ let code = `<h2 ref="art-point-1">Transition</h2>
   <li><b>linear</b> - скорость не меняется</li>
 </ul>
 
-<h2 ref="art-point-4">Transform</h2>
+<h2 id="art-point-4">Transform</h2>
 
 Свойство изменяющее элемент. Например, вращение, сдвиг, изменение размера и др.
 
@@ -41,7 +41,7 @@ let code = `<h2 ref="art-point-1">Transition</h2>
 
 <code class="inline-code">perspective</code> определяет глубину 3Д сцены
 
-<h2 ref="art-point-5">Настоящая анимация</h2>
+<h2 id="art-point-5">Настоящая анимация</h2>
 
 @keyframes определяет правила анимации. Для большей понятности код:
 
@@ -67,7 +67,7 @@ let code = `<h2 ref="art-point-1">Transition</h2>
 
 подобно transition свойство animation так же распределяется на свойства: 
 
-<h5 ref="art-point-6">Состав свойства animation</h5>
+<h5 id="art-point-6">Состав свойства animation</h5>
 <ul>
   <li>animation-name - имя анимации (определено в keyframes)</li>
 <li>animation-duration - продолжительность</li>

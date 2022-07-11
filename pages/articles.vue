@@ -204,17 +204,6 @@ export default {
     },
     // ПЕРЕХОДИМ В СТАТЬЮ
     async clickLink (id) {
-      let visited = this.$cookies.get('visited');
-      if (!visited) {
-        visited = id;
-        this.$cookies.set('visited', visited, {expires: '1Y', domain: '/'});
-        await this.$api('articles', 'addPopularity', {id: id});
-      }
-      else if (!visited.includes(id)) {
-        visited += ',' + id;
-        this.$cookies.set('visited', visited, {expires: '1Y', domain: '/'});
-        await this.$api('articles', 'addPopularity', {id: id});
-      }
     },
     // загрузить еще статьи
     async learnMore () {
@@ -235,7 +224,7 @@ export default {
           el.description = el.description.replace(regex, '<mark class="highlight">$&</mark>');
 
         } else if (this.searchInside && el.file.length !== 0) {
-          let content = (require('../static/articles/' + el.file)).code;
+          let content = el.html;
           if (content.toLowerCase().includes(this.search.toLowerCase())) {
             ret.push(el);
           }

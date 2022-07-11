@@ -10,7 +10,7 @@
           <p v-if="article.description && article.description.length > 0" class="about-art">{{ article.description }}</p>
           <p class="path-to-art">{{ article.date2 }} / <span v-for="(cat, ind) in this.article.cats" :key="'category-' + cat + article.art_id"><NuxtLink :to="'/articles?category=' + cat">{{ categories[cat] }}</NuxtLink><span v-if="ind !== article.cats.length-1"> - </span></span></p>
 
-          <div id="art-content" v-html="article.content"></div>
+          <div id="art-content" v-html="article.html"></div>
 
           <p class="art-tags" v-if="this.article.tags && this.article.tags.length > 0"><span v-for="(tag, ind) in this.article.tags" :key="'tag-' + ind"><nuxt-link :to="'/articles?tags=' + tag">{{ tag }}</nuxt-link></span></p>
           <div class="btn-group">
@@ -103,8 +103,8 @@
         <input :id="'tab-name' + (ind + 1)" type="radio" name="tab-name" v-for="(aside, ind) in this.article.dopconarr" :key="'tab-name' + (ind + 1)" :placeholder="aside.name" :checked="ind === 0">
 
         <div class="tabs-menu">
-          <div class="slide"></div>
-          <label :for="'tab-name' + (ind + 1)" :key="'tab-label' + (ind + 1)"  @click="showAside = 1" v-for="(aside, ind) in this.article.dopconarr">{{ aside.name }}</label>
+          <div class="slide" id="slide" :data-arr-length="this.article.dopconarr.length" :style="'height:' + (100 / this.article.dopconarr.length) + '%'"></div>
+          <label :for="'tab-name' + (ind + 1)" :key="'tab-label' + (ind + 1)"  @click="clickTab(ind)" v-for="(aside, ind) in this.article.dopconarr">{{ aside.name }}</label>
         </div>
         <div  v-for="(aside, ind) in this.article.dopconarr" :key="'tab-content' + (ind + 1)" class="tabs-content" :id="'tab-content' + (ind + 1)">
           <div v-if="showAside === 1">
@@ -113,7 +113,7 @@
             <div v-else-if="aside.type === 'test'">
               <div class="num-quest" v-if="questNum !== (aside.quests.length + 1)">{{questNum}} / {{aside.quests.length}}</div>
               <div class="test" :ref="'quest' + (ind + 1)" v-show="questNum === (ind + 1)" v-for="(test, ind) in aside.quests" :key="'test' + ind">
-                <div class="question" v-if="test.type !== 'details'">{{ test.text }}</div>
+                <div class="question" v-if="test.type !== 'details'" v-html="test.text"></div>
                 <div v-if="test.type === 'select'">
                   <div class="answer" v-for="(answ, i) in test.answers" :key="'answ' + i + ind"><button @click="nextQuest(test.type, test.trueansw, answ)">{{ answ }}</button></div>
                 </div>
@@ -144,7 +144,7 @@
             <div v-else-if="aside.type === 'contlist'" id="contlist">
               <ul>
                 <li v-for="(el, ind) in aside.list" :key="'contlist' + ind" :style="'margin-left:' + el.margin + 'em'">
-                  <span @click="scrollFix('#' + el.id)" :href="'#' + el.id">
+                  <span @click="scrollFix(el.id)" :href="'#' + el.id">
                   {{ el.text }}</span>
                 </li>
               </ul>
@@ -296,6 +296,11 @@ export default {
         console.error('i can\'t understand type of question');
       }
     },
+    clickTab(tab) {
+        document.getElementById('slide').style.top = ((100 / this.article.dopconarr.length) * (tab)) + '%';
+        console.log((100 / this.article.dopconarr.length) * (tab - 1))
+        this.showAside = 1;
+    },
     closeAside() {
       this.showAside = 0;
       if (window.innerWidth < 700) {
@@ -373,7 +378,7 @@ export default {
       this.$cookies.set('comment-name', this.userCom, {
         path: '/',
         maxAge: 60 * 60 * 24 * 30
-      }, {expires: '1Y', domain: '/'});
+      }, {expires: new Date(new Date().getTime() + 1000 * 3600 * 24 * 365)});
 
       await this.$api('info', 'comment', {user: name, text: text, art_id: this.article.art_id});
       this.comms.push({
@@ -388,13 +393,20 @@ export default {
       document.getElementById('loading').classList.remove('on');
     },
     scrollFix: function(hashbang) {
-      if (hashbang && document.querySelector(hashbang)) {
-        document.querySelector(hashbang).scrollIntoView({block: "start", behavior: "smooth"});
+      console.log('go to ', hashbang);
+      let element1 = null;
+      if (hashbang) element1 = document.getElementById(hashbang);
+      if (hashbang && element1) {
+        console.log('go!');
+        element1.scrollIntoView({block: "start", behavior: "smooth"});
+      } else {
+        console.log('no go...');
       }
       this.$router.push({path: this.$route.path, hash: hashbang});
     }
   },
   async fetch () {
+    console.log('fetch');
     if (this.$route.fullPath.includes('/article-template')) {
       this.article = await this.$api('articles', 'get', { id: 'template'});
       this.comms = await this.$api('articles', 'comments', { id: 'template' });
@@ -406,11 +418,25 @@ export default {
     this.article.tags = this.article.tags && this.article.tags.length > 0 ? this.article.tags.split(',') : [];
     if (this.article.sim_arts)
     this.article.sim_arts = await this.$api('articles', 'sim_arts', {ids: this.article.sim_arts});
-  
-    this.article.content = (require('../../static/articles/' + this.article.file)).code;
 
+    let visited = this.$cookies.get('visited');
+    console.log(visited);
+    let id = this.article.art_id;
+      if (!visited) {
+        console.log('add visited')
+        visited = id;
+        this.$cookies.set('visited', visited, {expires: new Date(new Date().getTime() + 1000 * 3600 * 24 * 365)});
+        console.log('and add popularity');
+        await this.$api('articles', 'addPopularity', {id: id});
+      }
+      else if (!visited.includes(id)) {
+        visited += ',' + id;
+        this.$cookies.set('visited', visited, {expires: new Date(new Date().getTime() + 1000 * 3600 * 24 * 365)});
+        await this.$api('articles', 'addPopularity', {id: id});
+      }
   },
   async mounted() {
+    console.log('mounted')
     this.width = window ? window.innerWidth : 800;
     setTimeout(() => this.scrollFix(this.$route.hash), 300);
     if (window.innerWidth < 1100) {
@@ -853,8 +879,6 @@ export default {
       }
     }
 
-
-
     .tabs-menu {
       z-index: 3;
       margin: 0;
@@ -885,7 +909,6 @@ export default {
       }
 
       .slide {
-        height: 20%;
         width: 100%;
         background-color: #1f1f1f;
         transition: 1s all ease;
@@ -923,26 +946,6 @@ export default {
     display: flex;
     animation: 1s tab-c-an;
     overflow-y: auto;
-  }
-
-  #tab-name1:checked ~ .tabs-menu .slide {
-    top: 0;
-  }
-
-  #tab-name2:checked ~ .tabs-menu .slide {
-    top: 20%;
-  }
-
-  #tab-name3:checked ~ .tabs-menu .slide {
-    top: 40%;
-  }
-
-  #tab-name4:checked ~ .tabs-menu .slide {
-    top: 60%;
-  }
-
-  #tab-name5:checked ~ .tabs-menu .slide {
-    top: 80%;
   }
 
   @keyframes tab-c-an {

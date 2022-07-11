@@ -7,6 +7,7 @@
     </div>
     <Header @upgrade-menu="upgradeMenu" @upgrade-search="upgradeSearch" :menu-open="menuOpen"></Header>
     <main class="main-page">
+      <div>
       <div :class="searchOpen ? 'conspectus' : 'conspectus close'" cont-text="Conspectus" id="conspectus">
         Conspectus
       </div>
@@ -18,7 +19,8 @@
         <button id="art-aside" style="display: none;" @click="asideMenMob ()">Доп. по статье</button>
       </div>
       <Nuxt @upgrade-search="upgradeSearch" ref="m725"/>
-      <footer style="text-align: center; font-size: 14px"><a href="/lichense">Swenlii © 2021</a></footer>
+      </div>
+      <footer><a href="/license">Swenlii © 2021</a></footer>
     </main>
   </div>
 </template>
@@ -80,6 +82,11 @@ export default {
 </script>
 
 <style lang="scss">
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .conspectus {
   font-size: 7em;
   margin-top: 0;
@@ -96,5 +103,10 @@ export default {
   &.close {
     margin-top: -3em;
   }
+}
+
+footer {
+  text-align: center;
+  font-size: 14px;
 }
 </style>

@@ -6,7 +6,7 @@
         <p>Для cначала давай проверим, что ты администратор.</p>
         <form v-on:submit.prevent="login()">
           <input type="name" placeholder="Введи никнейм..." v-model="user">
-          <input type="pasword" placeholder="Введи свой пароль..." v-model="pass">
+          <input type="password" placeholder="Введи свой пароль..." v-model="pass">
           <input type="submit">
         </form>
       </div>
@@ -111,9 +111,9 @@ export default {
 
   .admin {
     padding: 2em;
-    height: 100vh;
+    min-height: 100vh;
     section {
-      height: 100%;
+      min-height: 100%;
     }
     h1 {
       margin-bottom: 1em;

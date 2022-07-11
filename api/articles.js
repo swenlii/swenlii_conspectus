@@ -24,14 +24,10 @@ async function add({artId, artName, artDesc, artKeys, artTags, artSim, artCat, a
     return "Error! Такая статья уже существует! Найдена статья: " + ifexist[0].art_id + " / " + ifexist[0].title;
   }
 
-  fs.writeFile(`static/articles/${artId}.js`, `let code = \`${artText}\`; export {code}`, function (err) {
-    if (err) throw err;
-  });
-
   console.log(artCat, artName, artTags, artSim);
 
-  let art = await query(`INSERT INTO articles (art_id, title, description, file, img, categories, tags, sim_arts, dopcon, dopconarr, lib, keywords ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`, [
-    artId, artName, artDesc, artId + '.js', artImg, artCat, artTags && artTags.length > 0 ? artTags : null, artSim && artSim.length > 0 ? artSim : null, artDop ? 1 : 0, artDopCon ? artDopCon : null, artLib ? 1 : 0, artKeys ]);
+  let art = await query(`INSERT INTO articles (art_id, title, description, file, img, categories, tags, sim_arts, dopcon, dopconarr, lib, keywords, html ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`, [
+    artId, artName, artDesc, artId + '.js', artImg, artCat, artTags && artTags.length > 0 ? artTags : null, artSim && artSim.length > 0 ? artSim : null, artDop ? 1 : 0, artDopCon ? artDopCon : null, artLib ? 1 : 0, artKeys, artText ]);
   
   let transporter = nodemailer.createTransport({
     host: process.env.MAIL_HOST,
@@ -64,13 +60,8 @@ async function add({artId, artName, artDesc, artKeys, artTags, artSim, artCat, a
 
 async function edit({artId, artName, artDesc, artKeys, artTags, artSim, artCat, artLib, artImg, artText, artDop, artDopCon}) {
 
-  fs.writeFile(`static/articles/${artId}.js`, `let code = \`${artText}\`; export {code}`, function (err) {
-    if (err) throw err;
-  });
-
-  let art = await query(`UPDATE articles SET title = $1, description = $2, img = $3, categories = $4, tags = $5, sim_arts = $6, dopcon = $7, dopconarr = $8, lib = $9, keywords = $10 WHERE art_id = $11`, [
-    artName, artDesc, artImg, artCat, artTags && artTags.length > 0 ? artTags : null, artSim && artSim.length > 0 ? artSim : null, artDop, artDopCon ? artDopCon : null, artLib, artKeys, artId ]);
-
+  let art = await query(`UPDATE articles SET title = $1, description = $2, img = $3, categories = $4, tags = $5, sim_arts = $6, dopcon = $7, dopconarr = $8, lib = $9, keywords = $10, html = $11 WHERE art_id = $12`, [
+    artName, artDesc, artImg, artCat, artTags && artTags.length > 0 ? artTags : null, artSim && artSim.length > 0 ? artSim : null, artDop, artDopCon ? artDopCon : null, artLib, artKeys, artText, artId ]);
 
   return 'ok';
 }

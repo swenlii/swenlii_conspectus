@@ -51,6 +51,7 @@
         <div>
           <div class="buttons-for-text">
             <label>HTML статьи*</label>
+            <p>Переносы строк не сохраняются</p>
             <p>Добавить:</p>
             <button @click.prevent="add1">Абзац</button>
             <button @click.prevent="add2">Цитату</button>

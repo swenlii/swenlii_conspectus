@@ -97,23 +97,11 @@ export default {
       let study = this.$cookies.get('studied');
       if (!study) {
         study = id;
-        this.$cookies.set('studied', study, {expires: '1Y', domain: '/'});
+        this.$cookies.set('studied', study, {expires: new Date(new Date().getTime() + 1000 * 3600 * 24 * 365)});
       }
       else if (!study.includes(id)) {
         study += ',' + id;
-        this.$cookies.set('studied', study, {expires: '1Y', domain: '/'});
-      }
-
-      let visited = this.$cookies.get('visited');
-      if (!visited) {
-        visited = id;
-        this.$cookies.set('visited', visited, {expires: '1Y', domain: '/'});
-        await this.$api('articles', 'addPopularity', {id: id});
-      }
-      else if (!visited.includes(id)) {
-        visited += ',' + id;
-        this.$cookies.set('visited', visited, {expires: '1Y', domain: '/'});
-        await this.$api('articles', 'addPopularity', {id: id});
+        this.$cookies.set('studied', study, {expires: new Date(new Date().getTime() + 1000 * 3600 * 24 * 365)});
       }
     }
   },

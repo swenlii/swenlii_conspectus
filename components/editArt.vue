@@ -169,7 +169,7 @@ export default {
         this.artDop = this.articles[event.target.value].dopcon;   
         this.artDopCon = JSON.stringify(this.articles[event.target.value].dopconarr);
 
-        this.artText = (require('../static/articles/' + this.articles[event.target.value].file)).code;
+        this.artText = this.articles[event.target.value].html;
       }
     },
     add1 () {
