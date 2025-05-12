@@ -7,7 +7,7 @@
 ![node-version](https://img.shields.io/badge/node->=16.15.1-green)
 
 <div align="center">
-<img src="static/images/conspect-2.webp" width="600px">
+<img src="https://swenlii.github.io/img/projects/conspectus.png" width="600px">
 </div>
 
 ## ⚡Описание проекта
